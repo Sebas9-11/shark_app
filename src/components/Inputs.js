@@ -2,7 +2,6 @@ import * as rn from 'react-native'
 import { Colors } from '../constants/colors'
 import React from 'react'
 import { ButtonRegister } from './Buttons'
-import { v4 as uuidv4 } from 'uuid';
 
 export const Inputs = ({placeholder, type, securety, onchange, value , onChangeText}) => {
   return (
@@ -18,17 +17,17 @@ export const Inputs = ({placeholder, type, securety, onchange, value , onChangeT
   )
 }
 
-export const InputRegister = ({placeholder, type, securety,key , value , onPress}) => {
+export const InputRegister = ({ value , onPress, onChangeText }) => {
 
   return (
     <rn.View style={styles.register}>
       <rn.TextInput
         style={styles.textInput}
-        placeholder={placeholder}
-        keyboardType= {type}
+        placeholder = 'Ingresar participante'
+        keyboardType = 'ascii-capable'
         value={value}
-        secureTextEntry= {securety}
-        key={uuidv4}
+        securety={false}
+        onChangeText={ onChangeText }
       />
       <ButtonRegister
         title="Remove"
