@@ -1,5 +1,6 @@
 import React from 'react'
 import * as rn from 'react-native'
+import { GlobalStyles } from '../../constants/GlobalStyles'
 import { BlurView } from 'expo-blur'
 import { Buttons} from '../../components/Buttons'
 import { Inputs } from '../../components/Inputs'
@@ -7,7 +8,7 @@ import { Colors } from '../../constants/colors'
 
 export default function AuthScreen(){
   return (
-    <rn.View style={styles.container}>
+    <rn.View style={GlobalStyles.container}>
       <BlurView intensity={80} style={styles.blur}>
       <rn.Text style={styles.title}>Login</rn.Text>
       <Inputs
@@ -37,12 +38,6 @@ export default function AuthScreen(){
 }
 
 const styles = rn.StyleSheet.create({
-  container:{
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'gray',
-  }, 
   blur:{
     width: '90%',
     height: '50%',

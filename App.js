@@ -1,6 +1,7 @@
-import AuthScreen from "./src/screens/auth/AuthScreen"
+import RegisterScreen from "./src/screens/auth/RegisterScreen"
+
 export default function App() {
   return (
-    <AuthScreen />
+    <RegisterScreen />
   )
 }

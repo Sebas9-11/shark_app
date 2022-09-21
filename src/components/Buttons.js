@@ -10,9 +10,26 @@ export const Buttons = ({title, onPress, color}) =>{
   )
 }
 
+export const ButtonRegister = ({title, onPress, color}) =>{
+  return (
+    <rn.TouchableOpacity style={[styles.buttonRegister, {backgroundColor: color}]} onPress={onPress}>
+      <rn.Text style={styles.text}>{title}</rn.Text>
+    </rn.TouchableOpacity>
+  )
+}
+
 const styles = rn.StyleSheet.create({
   container:{
     width: '90%',
+    height: 40,
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 5,
+    marginVertical:20
+  },
+  buttonRegister:{
+    width: '35%',
     height: 40,
     borderRadius: 6,
     alignItems: 'center',
