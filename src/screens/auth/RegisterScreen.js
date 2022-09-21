@@ -8,28 +8,33 @@ export default function RegisterScreen(){
 
   const [participantes , setParticipantes] = React.useState([])
   const [presupuesto , setPresupuesto] = React.useState(150.0)
-
-  const TextField = InputRegister({
-    value: '',
-    onPress:HandleRemove,
-    placeholder:'Nombre & Apellido',
-    type:'default',
-    securety:false,
-  })
+  const [nombres, setNombres] = React.useState({})
+  const key = React.useRef(0)
 
   const HandleAdd = () => {
     if(participantes.length < 4){
-      setParticipantes([...participantes, TextField ])
-    }else{
+      key.current += 1
+      setParticipantes([...participantes, `participante-${key.current}` ])
+    } else{
       rn.Alert.alert('No se pueden agregar mas participantes')
     }
   }
 
-  const HandleRemove = () => {
-    return(rn.Alert.alert('hola'))
-      
+  const HandleRemove = (key) => {
+    if(participantes.length > 0){
+      setParticipantes(
+        participantes.filter((item) => item !== key)
+      )
+      console.log(participantes)
+
+    } else{
+      rn.Alert.alert('No hay participantes para eliminar')
+    }
   }
 
+  const handdleChange = (text,key) => {
+    setNombres({...nombres, [key]: text })
+  }
   
   return(
     <rn.View style={GlobalStyles.simpleContainer}>
@@ -46,7 +51,18 @@ export default function RegisterScreen(){
         </rn.View>
         <rn.View style={styles.container}>
           <rn.Text style={GlobalStyles.titles}>Participantes</rn.Text>
-          {participantes}
+
+          { participantes && participantes.map((participante) => {
+            return(
+              <InputRegister
+                key={participante}
+                value={nombres[participante]}
+                onPress={() => HandleRemove(participante)}
+                onChangeText={handdleChange}
+              />
+            )
+          })}
+
           <Buttons
           title={'Agregar Participante'}
           onPress={HandleAdd}
