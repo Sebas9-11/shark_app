@@ -41,8 +41,13 @@ export default function RegisterScreen(){
       <rn.ScrollView style={{width:'100%' , paddingHorizontal:10}}>
         <rn.View style={styles.container}>
           <rn.Text style={GlobalStyles.titles}>Register</rn.Text>
-          <Inputs placeholder="Email" />
-          <Inputs placeholder="Password" />
+          <Inputs  
+            placeholder="Email" 
+          />
+          <Inputs 
+            placeholder="Password" 
+            securety={true}
+          />
         </rn.View>
         <rn.View style={styles.container}>
           <Inputs placeholder="Name of group" />
@@ -51,7 +56,6 @@ export default function RegisterScreen(){
         </rn.View>
         <rn.View style={styles.container}>
           <rn.Text style={GlobalStyles.titles}>Participantes</rn.Text>
-
           { participantes && participantes.map((participante) => {
             return(
               <InputRegister
@@ -79,7 +83,7 @@ export default function RegisterScreen(){
 
 const styles = rn.StyleSheet.create({ 
   container: {
-    width: '90%',
+    width: '100%',
     marginVertical: 10,
     borderWidth:1,
     borderColor: 'black',
