@@ -4,7 +4,7 @@ import React from 'react'
 const dataBase = () => {
   return (
     <View>
-      <Text>dataBase</Text>
+      <Text>Firebase</Text>
     </View>
   )
 }
