@@ -52,7 +52,7 @@ export const TextArea = ({placeholder}) => {
 const styles = rn.StyleSheet.create({
   textInput: {
     fontSize: 18,
-    fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
+    // fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
     color: Colors.dark,
     width: '95%',
     height: 40,
