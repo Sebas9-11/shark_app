@@ -4,6 +4,7 @@ import React from 'react'
 
 export default function HomeScreen(){
   return (
+    // mi commit
     <rn.View style={styles.container}>
       <rn.Text>Home</rn.Text>
     </rn.View>
