@@ -21,3 +21,18 @@ export const GlobalStyles = StyleSheet.create({
     textAlign:"center"
   }
 });
+
+export const GlobalLayouts = ( {width} ) => StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: "center",
+    width: width ? width : '100%',
+  },
+  column: {
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignItems: "center",
+      width: width ? width : '100%',
+  },
+});
