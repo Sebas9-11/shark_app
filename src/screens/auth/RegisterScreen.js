@@ -1,22 +1,21 @@
-import React from 'react'
-import * as rn from 'react-native'
-import { Inputs , TextArea, InputRegister} from '../../components/Inputs'
-import { Buttons } from '../../components/Buttons'
+import { useState, useRef } from 'react'
+import { View,Text,ScrollView, StyleSheet,Alert } from 'react-native'
+import { Inputs , TextArea, InputRegister, Buttons} from '../../components'
 import { GlobalStyles } from '../../constants/GlobalStyles'
 
 export default function RegisterScreen(){
 
-  const [participantes , setParticipantes] = React.useState([])
-  const [presupuesto , setPresupuesto] = React.useState(150.0)
-  const [nombres, setNombres] = React.useState({})
-  const key = React.useRef(0)
+  const [participantes , setParticipantes] = useState([])
+  const [presupuesto , setPresupuesto] = useState(150.0)
+  const [nombres, setNombres] = useState({})
+  const key = useRef(0)
 
   const HandleAdd = () => {
     if(participantes.length < 4){
       key.current += 1
       setParticipantes([...participantes, `participante-${key.current}` ])
     } else{
-      rn.Alert.alert('No se pueden agregar mas participantes')
+      Alert.alert('No se pueden agregar mas participantes')
     }
   }
 
@@ -28,7 +27,7 @@ export default function RegisterScreen(){
       console.log(participantes)
 
     } else{
-      rn.Alert.alert('No hay participantes para eliminar')
+      Alert.alert('No hay participantes para eliminar')
     }
   }
 
@@ -37,10 +36,10 @@ export default function RegisterScreen(){
   }
   
   return(
-    <rn.View style={GlobalStyles.simpleContainer}>
-      <rn.ScrollView style={{width:'100%' , paddingHorizontal:10}}>
-        <rn.View style={styles.container}>
-          <rn.Text style={GlobalStyles.titles}>Register</rn.Text>
+    <View style={GlobalStyles.simpleContainer}>
+      <ScrollView style={{width:'100%' , paddingHorizontal:10}}>
+        <View style={styles.container}>
+          <Text style={GlobalStyles.titles}>Register</Text>
           <Inputs  
             placeholder="Email" 
           />
@@ -48,14 +47,14 @@ export default function RegisterScreen(){
             placeholder="Password" 
             securety={true}
           />
-        </rn.View>
-        <rn.View style={styles.container}>
+        </View>
+        <View style={styles.container}>
           <Inputs placeholder="Name of group" />
           <TextArea placeholder="Description of group" />
-          <rn.Text>Presupuesto: ${presupuesto}</rn.Text>
-        </rn.View>
-        <rn.View style={styles.container}>
-          <rn.Text style={GlobalStyles.titles}>Participantes</rn.Text>
+          <Text>Presupuesto: ${presupuesto}</Text>
+        </View>
+        <View style={styles.container}>
+          <Text style={GlobalStyles.titles}>Participantes</Text>
           { participantes && participantes.map((participante) => {
             return(
               <InputRegister
@@ -71,17 +70,17 @@ export default function RegisterScreen(){
           title={'Agregar Participante'}
           onPress={HandleAdd}
           />
-        </rn.View>
+        </View>
         <Buttons
           title={'Crear Grupo'}
-          onPress={()=>rn.Alert.alert('Grupo creado')}
+          onPress={()=>Alert.alert('Grupo creado')}
           />
-      </rn.ScrollView>
-    </rn.View>
+      </ScrollView>
+    </View>
   )
 }
 
-const styles = rn.StyleSheet.create({ 
+const styles = StyleSheet.create({ 
   container: {
     width: '100%',
     marginVertical: 10,

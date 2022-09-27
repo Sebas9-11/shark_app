@@ -1,24 +1,24 @@
-import * as rn from 'react-native'
+import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { Colors } from '../constants/colors'
 
 export const Buttons = ({title, onPress, color}) =>{
   return (
-    <rn.TouchableOpacity style={[styles.container, {backgroundColor: color}]} onPress={onPress}>
-      <rn.Text style={styles.text}>{title}</rn.Text>
-    </rn.TouchableOpacity>
+    <TouchableOpacity style={[styles.container, {backgroundColor: color}]} onPress={onPress}>
+      <Text style={styles.text}>{title}</Text>
+    </TouchableOpacity>
   )
 }
 
 export const ButtonRegister = ({title, onPress, color}) =>{
   return (
-    <rn.TouchableOpacity style={[styles.buttonRegister, {backgroundColor: color}]} onPress={onPress}>
-      <rn.Text style={styles.text}>{title}</rn.Text>
-    </rn.TouchableOpacity>
+    <TouchableOpacity style={[styles.buttonRegister, {backgroundColor: color}]} onPress={onPress}>
+      <Text style={styles.text}>{title}</Text>
+    </TouchableOpacity>
   )
 }
 
-const styles = rn.StyleSheet.create({
+const styles =  StyleSheet.create({
   container:{
     width: '90%',
     height: 40,

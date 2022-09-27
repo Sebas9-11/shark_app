@@ -1,7 +1,7 @@
-import RegisterScreen from "./src/screens/auth/RegisterScreen"
+import ProyectScreen from "./src/screens/user/ProyectScreen";
 
 export default function App() {
   return (
-    <RegisterScreen />
+    <ProyectScreen />
   )
 }

@@ -9,3 +9,6 @@ export const Colors = {
   dark: '#0c0c0c',
   danger: '#ff5252',
 }
+
+// 00c2cc back
+// 3f48cc primary
