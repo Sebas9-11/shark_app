@@ -38,13 +38,15 @@ export const InputRegister = ({ value , onPress, onChangeText }) => {
   )
 }
 
-export const TextArea = ({placeholder}) => {
+export const TextArea = ({placeholder , value, onChangeText}) => {
   return (
     <rn.TextInput
       style={styles.textArea}
       placeholder={placeholder}
       multiline={true}
       numberOfLines={6}
+      value={value}
+      onchangeText={onChangeText}
     />
   )
 }
@@ -52,30 +54,33 @@ export const TextArea = ({placeholder}) => {
 const styles = rn.StyleSheet.create({
   textInput: {
     fontSize: 18,
-    // fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
+    fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
     color: Colors.dark,
     width: '95%',
     height: 40,
     borderWidth:2,
-    borderColor: Colors.medium,
+    borderColor: Colors.black,
     borderRadius: 6,
     padding: 10,
     marginVertical: 10,
-    marginHorizontal:10
+    marginHorizontal:10,
+    backgroundColor: Colors.light
   },
   textArea:{
     fontSize: 18,
     fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
     color: Colors.dark,
-    width: '100%',
+    width: '95%',
     height: 200,
     borderWidth:2,
-    borderColor: Colors.medium,
+    borderColor: Colors.black,
     borderRadius: 6,
     padding: 10,
     marginVertical: 10,
+    marginHorizontal:10,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    backgroundColor: Colors.light
   },
   register:{
     width: '90%',

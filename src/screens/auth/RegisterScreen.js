@@ -10,6 +10,7 @@ export default function RegisterScreen(){
   const [nombres, setNombres] = useState({})
   const key = useRef(0)
 
+
   const HandleAdd = () => {
     if(participantes.length < 4){
       key.current += 1
@@ -34,6 +35,11 @@ export default function RegisterScreen(){
   const handdleChange = (text,key) => {
     setNombres({...nombres, [key]: text })
   }
+
+  const hanldeSummit = () => {
+    console.log(nombres, key)
+  }
+
   
   return(
     <View style={GlobalStyles.simpleContainer}>
@@ -73,7 +79,7 @@ export default function RegisterScreen(){
         </View>
         <Buttons
           title={'Crear Grupo'}
-          onPress={()=>Alert.alert('Grupo creado')}
+          onPress={hanldeSummit}
           />
       </ScrollView>
     </View>
