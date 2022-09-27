@@ -20,13 +20,12 @@ export const ButtonRegister = ({title, onPress, color}) =>{
 
 const styles = rn.StyleSheet.create({
   container:{
-    width: '90%',
+    width: '100%',
     height: 40,
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 5,
-    marginVertical:20
+    marginVertical:5,
   },
   buttonRegister:{
     width: '35%',
