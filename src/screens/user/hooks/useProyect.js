@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import imgs from '../../../../assets/favicon.png'
 
-export const useProyect = ({ id }) => {
-    const [id, setId] = useState(id)
+export const useProyect = ({ proyectId }) => {
+    const [id, setId] = useState(proyectId)
     const [proyect, setProyect] = useState(null)
     const [img, setImage] = useState(imgs)
     const [title, setTitle] = useState('Proyecto 1')
@@ -26,7 +26,7 @@ export const useProyect = ({ id }) => {
     }
 
     useEffect(() => {
-        getProyect()
+        // getProyect()
     }, [id])
 
     return { proyect, img, title, participants, description }
