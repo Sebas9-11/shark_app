@@ -13,10 +13,9 @@ export default function ProyectScreen({ id }) {
         <View style={GlobalStyles.simpleContainer}>
             <ScrollView style={styles.scroll}>
                 <View style={styles.container}>
-                    {proyect}
-                    <ProyectHeader title={proyect.title} img={imgs}/>
+                    {/* <ProyectHeader title={proyect.title} img={imgs}/>
                     <ProyectDescription description={proyect.description}/>
-                    <ProyectParticipants participants={proyect.participants}/>
+                    <ProyectParticipants participants={proyect.participants}/> */}
                 </View>
             </ScrollView >
         </View>

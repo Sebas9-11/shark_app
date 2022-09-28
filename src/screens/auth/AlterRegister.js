@@ -5,14 +5,9 @@ import { Buttons } from '../../components/Buttons'
 import { GlobalStyles } from '../../constants/GlobalStyles'
 import Divider from 'react-native-divider'
 import { Colors } from '../../constants/colors'
-import { db } from '../../firebaseConfig'
-import { collection, addDoc} from 'firebase/firestore';
-import * as Auth from 'firebase/auth'
+import { firebase } from '../../services/firebase'
 
 export default function AlterRegister(){
-
-  const auth = Auth.getAuth()
-  const uid = auth.currentUser.uid
 
   const [newGroup, setNewGroup] = React.useState({
     name1:'',
@@ -22,11 +17,17 @@ export default function AlterRegister(){
     group:'',
     desc:'',
     budget:0,
-    id: uid
+    id: firebase.user
   })
 
   const HandleAdd = async () => {
-    await addDoc(collection(db, "groups"), newGroup);
+    await firebase.addDocument("groups", newGroup)
+      .then((id) => {
+        console.log(id)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
 

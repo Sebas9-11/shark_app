@@ -1,53 +1,40 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import { Buttons, Inputs} from '../../components'
 import { GlobalStyles } from '../../constants'
-import { BlurView } from 'expo-blur'
-import { Colors } from '../../constants/colors'
-import React from 'react'
-import { db } from '../../firebaseConfig';
-import * as Auth from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
+import { Colors } from '../../constants/colors'
+import { BlurView } from 'expo-blur'
+import React from 'react'
+import { firebase } from '../../services/firebase'
 
 export default function AuthScreen(){
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const navigation = useNavigation()
-  const auth = Auth.getAuth()
 
   const handleCreateAcount = async () => {
-    if (email && password) {
-      await Auth.createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          navigation.navigate('Register')
-          // ...
-          console.log(user)
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-        });
-    }
+    await firebase.signUp(email, password)
+      .then(user => {
+        navigation.navigate('Register')
+        console.log(user)
+      })
+      .catch( error => {
+        Alert.alert('Error', error.message)
+      })
   }
 
     const handleSingIn = async () => {
-      if (email && password) {
-        await Auth.signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            navigation.navigate('Group')
-            const userActivo = auth.currentUser.uid
-            console.log('el usuario esta: ' ,userActivo)
-            //console.log(user)
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-          });
-      }
+      await firebase.signIn(email, password)
+        .then(user => {
+          navigation.navigate('Group')
+          console.log(user)
+        })
+        .catch( error => {
+          console.log(error.message)
+        })
     }
+
+    
 
   return (
     <View style={GlobalStyles.container}>
