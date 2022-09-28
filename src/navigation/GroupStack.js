@@ -5,6 +5,7 @@ import { Text } from "react-native";
 import { db } from "../firebaseConfig";
 import * as Auth from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
+import { Colors } from './../constants/colors';
 
 const Drawer = createDrawerNavigator();
 
@@ -30,7 +31,7 @@ export default function GroupStack() {
   function logout(){
     return (
       <Text 
-        style={{color:'black', fontSize:20, fontWeight:'bold', margin:10}}
+        style={{color:Colors.background, fontSize:20, fontWeight:'bold', margin:10}}
         onPress={handleSingOut}
       >
       Logout
@@ -43,6 +44,7 @@ export default function GroupStack() {
       headerRight: () => (
         logout()
       ),
+      drawerActiveBackgroundColor: Colors.background,
     }}>
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Judges" component={Judges}/>
