@@ -1,13 +1,7 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, getAuth } from 'firebase/auth'
-<<<<<<< HEAD
-import { initializeApp } from 'firebase/app'
-import { getStorage } from 'firebase/storage'
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, where,getDoc } from 'firebase/firestore';
-=======
 import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 import { initializeApp } from 'firebase/app'
 import { getStorage } from 'firebase/storage'
->>>>>>> registro
 import Constants  from 'expo-constants'
 
 class Firebase {
