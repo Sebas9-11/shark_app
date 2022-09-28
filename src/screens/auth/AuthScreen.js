@@ -20,6 +20,7 @@ export default function AuthScreen(){
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+          navigation.navigate('Register')
           // ...
           console.log(user)
         })
@@ -37,7 +38,9 @@ export default function AuthScreen(){
           .then((userCredential) => {
             const user = userCredential.user;
             navigation.navigate('Group')
-            console.log(user)
+            const userActivo = auth.currentUser.uid
+            console.log('el usuario esta: ' ,userActivo)
+            //console.log(user)
           })
           .catch((error) => {
             const errorCode = error.code;

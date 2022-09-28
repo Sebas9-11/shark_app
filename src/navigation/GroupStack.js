@@ -22,6 +22,8 @@ export default function GroupStack() {
     .then(() => {
       console.log('saliste')
       navigation.navigate('Login')
+      const user = auth.currentUser
+      console.log(user)
     })
     .catch((error) => {
       console.log(error)
