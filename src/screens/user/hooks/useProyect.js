@@ -1,6 +1,7 @@
 import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
 import { useState, useEffect } from 'react'
 import { db } from '../../../firebaseConfig'
+import * as Auth from 'firebase/auth'
 
 
 export const useProyect = () => {
@@ -9,6 +10,8 @@ export const useProyect = () => {
     // const [title, setTitle] = useState('')
     // const [description, setDescription] = useState('')
     // const [participants, setParticipants] = useState(null)
+    const auth = Auth.getAuth()
+    const user = auth.currentUser.uid
 
     useEffect( () => {
         const proyectos = collection(db, 'proyectos')

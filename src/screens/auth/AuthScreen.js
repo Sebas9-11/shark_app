@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import { Buttons, Inputs} from '../../components'
 import { GlobalStyles } from '../../constants'
 import { BlurView } from 'expo-blur'
@@ -12,10 +12,12 @@ export default function AuthScreen(){
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const navigation = useNavigation()
-  const auth = Auth.getAuth()
+  const auth = Auth.getAuth();
 
   const handleCreateAcount = async () => {
-    if (email && password) {
+    if (email==='' || password===''){
+      Alert.alert('Atencion!' , 'Ingresa todos los campos')
+    }else if(email && password){
       await Auth.createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
@@ -32,22 +34,25 @@ export default function AuthScreen(){
     }
   }
 
-    const handleSingIn = async () => {
-      if (email && password) {
-        await Auth.signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            navigation.navigate('Group')
-            const userActivo = auth.currentUser.uid
-            console.log('el usuario esta: ' ,userActivo)
-            //console.log(user)
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-          });
-      }
+  const handleSingIn = async () => {
+    if (email && password) {
+      await Auth.signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          navigation.navigate('Group')
+          const userActivo = auth.currentUser.uid
+          console.log('el usuario esta: ' ,userActivo)
+          //console.log(user)
+        })
+        .catch((error) => {
+          Alert.alert('Atencion!' , 'Usuario o contraseña incorrectos o no existe')
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
     }
+  }
+
+
 
   return (
     <View style={GlobalStyles.container}>

@@ -17,35 +17,13 @@ export const Inputs = ({placeholder, type, securety, onchange, value , onChangeT
   )
 }
 
-export const InputRegister = ({ value , onPress, onChangeText }) => {
-
-  return (
-    <rn.View style={styles.register}>
-      <rn.TextInput
-        style={styles.textInput}
-        placeholder = 'Ingresar participante'
-        keyboardType = 'ascii-capable'
-        value={value}
-        securety={false}
-        onChangeText={ onChangeText }
-      />
-      <ButtonRegister
-        title="Remove"
-        color={Colors.danger}
-        onPress={onPress}
-      />
-    </rn.View>
-  )
-}
-
-export const TextArea = ({placeholder , value, onChangeText}) => {
+export const TextArea = ({placeholder, onChangeText}) => {
   return (
     <rn.TextInput
       style={styles.textArea}
       placeholder={placeholder}
       multiline={true}
       numberOfLines={6}
-      value={value}
       onchangeText={onChangeText}
     />
   )
@@ -82,13 +60,4 @@ const styles = rn.StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: Colors.light
   },
-  register:{
-    width: '90%',
-    flexDirection: 'row',
-    paddingHorizontal: 50,
-    marginHorizontal:20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 10,
-  }
 })

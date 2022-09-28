@@ -8,17 +8,21 @@ import { Colors } from '../../constants/colors'
 import { db } from '../../firebaseConfig'
 import { collection, addDoc} from 'firebase/firestore';
 import * as Auth from 'firebase/auth'
+import { useNavigation } from '@react-navigation/native'
 
 export default function AlterRegister(){
 
+  const navigation = useNavigation()
   const auth = Auth.getAuth()
   const uid = auth.currentUser.uid
 
+  const [name1,setName1]=React.useState('');
+  const [name2,setName2]=React.useState('');
+  const [name3,setName3]=React.useState('');
+  const [name4,setName4]=React.useState('');
+
   const [newGroup, setNewGroup] = React.useState({
-    name1:'',
-    name2:'',
-    name3:'',
-    name4:'',
+    participants:[],
     group:'',
     desc:'',
     budget:0,
@@ -26,7 +30,10 @@ export default function AlterRegister(){
   })
 
   const HandleAdd = async () => {
+    setNewGroup({
+      ...newGroup,participants:[name1,name2,name3,name4]})
     await addDoc(collection(db, "groups"), newGroup);
+    navigation.navigate('Login')
   }
 
 
@@ -57,19 +64,19 @@ export default function AlterRegister(){
         <Divider orientation="left" borderColor='black'>Info Participants</Divider>
         <Inputs 
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setNewGroup({...newGroup, name1:text})}
+          onChangeText={(text) => setName1(text)}
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setNewGroup({...newGroup, name2:text})}
+          onChangeText={(text) => setName2(text)}
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setNewGroup({...newGroup, name3:text})}
+          onChangeText={(text) => setName3(text)}
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setNewGroup({...newGroup, name4:text})}
+          onChangeText={(text) => setName4(text)}
         />
 
         <Buttons

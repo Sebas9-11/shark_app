@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import Judges from "../screens/user/Judges";
+import JudgesScreen from "../screens/judges/JudgesScreen";
 import ProyectScreen from "../screens/user/ProyectScreen";
 import { Text } from "react-native";
 import { db } from "../firebaseConfig";
@@ -18,15 +18,11 @@ export default function GroupStack() {
   const navigation = useNavigation()
   const auth = Auth.getAuth()
   const handleSingOut = async () => {
-    await auth.signOut()
-    .then(() => {
-      console.log('saliste')
+    await Auth.signOut(auth).then(() => {
+      // Sign-out successful.
       navigation.navigate('Login')
-      const user = auth.currentUser
-      console.log(user)
-    })
-    .catch((error) => {
-      console.log(error)
+    }).catch((error) => {
+      // An error happened.
     });
   }
 
@@ -49,7 +45,7 @@ export default function GroupStack() {
       drawerActiveBackgroundColor: Colors.background,
     }}>
       <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Judges" component={Judges}/>
+      <Drawer.Screen name="Judges" component={JudgesScreen}/>
     </Drawer.Navigator>
   );
 }

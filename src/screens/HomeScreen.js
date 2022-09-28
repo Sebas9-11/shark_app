@@ -17,6 +17,5 @@ const styles = rn.StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-
   }
 })
