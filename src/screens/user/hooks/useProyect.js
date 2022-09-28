@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react'
+import { onSnapshot } from "firebase/firestore"
 import { firebase } from '../../../services/firebase'
 
 export const useProyect = () => {
-    const [proyect, setProyect] = useState([])
-    // const [img, setImage] = useState(null)
-    // const [title, setTitle] = useState('')
-    // const [description, setDescription] = useState('')
-    // const [participants, setParticipants] = useState(null)
-    const id = firebase.user
+    const [proyect, setProyect] = useState()
+
+    const getProyect = async () => {
+        const id = firebase.user
+        const [response] = await firebase.getDocumentById('groups',id)
+        console.log(response)
+        setProyect(response[0])
+    }
+
     useEffect( () => {
-        firebase.getDocumentById('groups')
-        // return onSnapshot
+        getProyect()
     }, [])
 
     return proyect 
-
 }

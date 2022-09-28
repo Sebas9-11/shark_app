@@ -9,9 +9,9 @@ export default function ProyectParticipants({ participants }) {
         participants
       </Divider>
       <View style={GlobalLayouts({width: '100%'}).column}>
-        {participants && participants.map((item, index) => (
+        {participants && Object.values(participants).map((item, index) => (
           <View style={styles.participant} key={index}>
-            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.name}>{item}</Text>
           </View>
         ))}
       </View>
