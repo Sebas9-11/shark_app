@@ -7,8 +7,12 @@ import Divider from 'react-native-divider'
 import { Colors } from '../../constants/colors'
 import { db } from '../../firebaseConfig'
 import { collection, addDoc} from 'firebase/firestore';
+import * as Auth from 'firebase/auth'
 
 export default function AlterRegister(){
+
+  const auth = Auth.getAuth()
+  const uid = auth.currentUser.uid
 
   const [newGroup, setNewGroup] = React.useState({
     name1:'',
@@ -18,6 +22,7 @@ export default function AlterRegister(){
     group:'',
     desc:'',
     budget:0,
+    id: uid
   })
 
   const HandleAdd = async () => {
