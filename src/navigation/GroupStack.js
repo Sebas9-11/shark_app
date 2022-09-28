@@ -2,10 +2,9 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import JudgesScreen from "../screens/judges/JudgesScreen";
 import ProyectScreen from "../screens/user/ProyectScreen";
 import { Text } from "react-native";
-import { db } from "../firebaseConfig";
-import * as Auth from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
-import { Colors } from './../constants/colors';
+import { firebase } from "../services/firebase";
+import { Colors } from "../constants";
 
 const Drawer = createDrawerNavigator();
 
@@ -16,14 +15,21 @@ function Home(){
 export default function GroupStack() {
 
   const navigation = useNavigation()
-  const auth = Auth.getAuth()
+
   const handleSingOut = async () => {
+<<<<<<< HEAD
     await Auth.signOut(auth).then(() => {
       // Sign-out successful.
       navigation.navigate('Login')
     }).catch((error) => {
       // An error happened.
     });
+=======
+    await firebase.signOut()
+      .then(() => {
+        navigation.navigate('Login')
+      })
+>>>>>>> registro
   }
 
   function logout(){

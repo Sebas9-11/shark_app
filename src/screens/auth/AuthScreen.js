@@ -1,17 +1,17 @@
 import { View, Text, StyleSheet, Alert } from 'react-native'
 import { Buttons, Inputs} from '../../components'
 import { GlobalStyles } from '../../constants'
-import { BlurView } from 'expo-blur'
-import { Colors } from '../../constants/colors'
-import React from 'react'
-import { db } from '../../firebaseConfig';
-import * as Auth from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
+import { Colors } from '../../constants/colors'
+import { BlurView } from 'expo-blur'
+import React from 'react'
+import { firebase } from '../../services/firebase'
 
 export default function AuthScreen(){
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const navigation = useNavigation()
+<<<<<<< HEAD
   const auth = Auth.getAuth();
 
   const handleCreateAcount = async () => {
@@ -49,10 +49,35 @@ export default function AuthScreen(){
           const errorCode = error.code;
           const errorMessage = error.message;
         });
+=======
+
+  const handleCreateAcount = async () => {
+    await firebase.signUp(email, password)
+      .then(user => {
+        navigation.navigate('Register')
+        console.log(user)
+      })
+      .catch( error => {
+        Alert.alert('Error', error.message)
+      })
+  }
+
+    const handleSingIn = async () => {
+      await firebase.signIn(email, password)
+        .then(user => {
+          navigation.navigate('Group')
+          console.log(user)
+        })
+        .catch( error => {
+          console.log(error.message)
+        })
+>>>>>>> registro
     }
   }
 
 
+
+    
 
   return (
     <View style={GlobalStyles.container}>
