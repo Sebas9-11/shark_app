@@ -4,7 +4,7 @@ import { GlobalStyles } from '../../constants'
 import imgs from '../../../assets/favicon.png'
 
 import { useProyect } from './hooks/useProyect'
-
+import React from 'react'
 
 export default function ProyectScreen({ id }) {
     const proyect = useProyect()

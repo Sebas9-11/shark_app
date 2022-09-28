@@ -1,7 +1,7 @@
-import ProyectScreen from "./src/screens/user/ProyectScreen";
+import Index from './src/navigation/Index';
 
 export default function App() {
-  return (
-    <ProyectScreen id={1}/>
+  return(
+    <Index />
   )
 }

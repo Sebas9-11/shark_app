@@ -1,12 +1,10 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { NavigationContainer } from "@react-navigation/native";
+import AuthStack from "./AuthStack";
 
-const Index = () => {
+export default function Index() {
   return (
-    <View>
-      <Text>Index</Text>
-    </View>
-  )
+    <NavigationContainer>
+      <AuthStack />
+    </NavigationContainer>
+  );
 }
-
-export default Index
