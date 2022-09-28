@@ -1,25 +1,22 @@
 import { View, ScrollView, StyleSheet } from 'react-native'
 import { ProyectHeader, ProyectDescription, ProyectParticipants }  from './components'
-import { ButtonRegister } from '../../components'
-import { GlobalStyles, GlobalLayouts, Colors } from '../../constants'
+import { GlobalStyles } from '../../constants'
+import imgs from '../../../assets/favicon.png'
+
 import { useProyect } from './hooks/useProyect'
 
 
 export default function ProyectScreen({ id }) {
-
-    const { title, img, description, participants } = useProyect(id)
+    const proyect = useProyect()
 
     return (   
         <View style={GlobalStyles.simpleContainer}>
             <ScrollView style={styles.scroll}>
                 <View style={styles.container}>
-                    <ProyectHeader title={title} img={img}/>
-                    <ProyectDescription description={description}/>
-                    <ProyectParticipants participants={participants}/>
-                    <View style={GlobalLayouts({width: 300}).row} >
-                        <ButtonRegister title="Profile" color={Colors.primary}/>
-                        <ButtonRegister title="Judges" color={Colors.secondary}/>
-                    </View>
+                    {proyect}
+                    <ProyectHeader title={proyect.title} img={imgs}/>
+                    <ProyectDescription description={proyect.description}/>
+                    <ProyectParticipants participants={proyect.participants}/>
                 </View>
             </ScrollView >
         </View>
