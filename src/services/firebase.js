@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, getAuth } from 'firebase/auth'
-import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { initializeApp } from 'firebase/app'
 import { getStorage } from 'firebase/storage'
 import Constants  from 'expo-constants'
@@ -74,34 +74,18 @@ class Firebase {
     }
 
     static async getDocumentById(collectionName, id) {
+        const response = []
         const q = query(collection(Firebase.db, collectionName), where("id", "==", id))
-
         const querySnapshot = await getDocs(q)
-        querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data())
+        .catch((error) => {
+            console.log(error.message)
         })
-    }
-      
 
-
-    // static getDocumentById(collectionName, id) {
-    //     const response = []
-
-    //     if (Firebase.user) {
-    //         const ref = collection(Firebase.db, collectionName)
-    //         const q = query(ref, where('id', '==', id))
-    //         console.log(q)
-    //         const onSnapshot = (q, (querySnapshot) => {
-    //             querySnapshot.forEach((doc) => {
-    //                 response.push(doc.data())
-    //             })
-    //         })
-
-    //         return [response, onSnapshot]
-    //     }
-    //     throw new Error('Error with credentials')
-    // }
+        querySnapshot.forEach((doc) => {
+            response.push(doc.data())
+        })
+        return [response, q]
+    }   
 }
 
 Firebase.init()

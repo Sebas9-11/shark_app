@@ -1,8 +1,9 @@
 import { View, ScrollView, StyleSheet } from 'react-native'
+import { ProyectHeader,ProyectDescription,ProyectParticipants } from './components'
 import { GlobalStyles } from '../../constants'
 import { useProyect } from './hooks/useProyect'
+import imgs from '../../../assets/favicon.png'
 import React from 'react'
-import {firebase} from '../../services/firebase'
 
 export default function ProyectScreen() {
     const proyect = useProyect()
@@ -12,8 +13,8 @@ export default function ProyectScreen() {
         <View style={GlobalStyles.simpleContainer}>
             <ScrollView style={styles.scroll}>
                 <View style={styles.container}>
-                    {/* <ProyectHeader title={proyect.title} img={imgs}/>
-                    <ProyectDescription description={proyect.description}/>
+                    {/* <ProyectHeader title={proyect.group} img={imgs}/>
+                    <ProyectDescription description={proyect.desc}/>
                     <ProyectParticipants participants={proyect.participants}/> */}
                 </View>
             </ScrollView >

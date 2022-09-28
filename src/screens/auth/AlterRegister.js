@@ -1,19 +1,15 @@
-import React from 'react'
-import * as rn from 'react-native'
-import { Inputs , TextArea} from '../../components/Inputs'
-import { Buttons } from '../../components/Buttons'
-import { GlobalStyles } from '../../constants/GlobalStyles'
+import { View, TextInput, Text, ScrollView, StyleSheet } from 'react-native'
+import { Inputs , TextArea, Buttons} from '../../components'
+import { GlobalStyles, Colors } from '../../constants'
 import Divider from 'react-native-divider'
-import { Colors } from '../../constants/colors'
 import { firebase } from '../../services/firebase'
+import { useState } from 'react'
 
 export default function AlterRegister(){
-
-  const [newGroup, setNewGroup] = React.useState({
-    participant1: '',
-    participant2: '',
-    participant3: '',
-    participant4: '',
+  const [participants, setParticipants] = useState({})
+  const [newGroup, setNewGroup] = useState({
+    judges: {},
+    collection: 0,
     group:'',
     desc:'',
     budget:0,
@@ -21,7 +17,7 @@ export default function AlterRegister(){
   })
 
   const HandleAdd = async () => {
-    await firebase.addDocument("groups", newGroup)
+    await firebase.addDocument("groups", {...newGroup, participants})
       .then((id) => {
         console.log(id)
       })
@@ -31,45 +27,52 @@ export default function AlterRegister(){
   }
 
   return(
-    <rn.View style={GlobalStyles.simpleContainer}>
-      <rn.ScrollView style={{width:'100%' , paddingHorizontal:10}}>
-        <rn.Text style={GlobalStyles.titles}> Register </rn.Text>
+    <View style={GlobalStyles.simpleContainer}>
+      <ScrollView style={{width:'100%' , paddingHorizontal:10}}>
+        <Text style={GlobalStyles.titles}> Register </Text>
         
         <Divider orientation="left" borderColor='black'>Info Group</Divider>
         <Inputs 
           placeholder="Name of group"
-          onChangeText={(text) => setNewGroup({...newGroup, group:text})}
+          value={newGroup.group}
+          onChangeText={(group) => setNewGroup({...newGroup, group})}
         />
         <TextArea 
           placeholder={'describe the objective of the group'}
-          onChangeText={(text) => setNewGroup({...newGroup, desc:text})}
+          value={newGroup.desc}
+          onChangeText={(desc) => setNewGroup({...newGroup, desc})}
         />
-        <rn.View style={styles.containerP}>
-          <rn.Text>Presupuesto: </rn.Text>
-          <rn.TextInput 
+        <View style={styles.containerP}>
+          <Text>Presupuesto: </Text>
+          <TextInput 
             style={styles.textInput}
             placeholder='$150.0'
             keyboardType='numeric'
-            onChangeText={(number)=> setNewGroup({...newGroup, budget:number})}
+            value={newGroup.budget}
+            onChangeText={(budget)=> setNewGroup({...newGroup, budget})}
           />
-        </rn.View>
+        </View>
 
         <Divider orientation="left" borderColor='black'>Info Participants</Divider>
         <Inputs 
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setNewGroup({...newGroup, participant1:text})}
+          value={participants.participant1}
+          onChangeText={(participant1) => setParticipants({...participants, participant1})}
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setNewGroup({...newGroup, participant2:text})}
+          value={participants.participant2}
+          onChangeText={(participant2) => setParticipants({...participants, participant2})}
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setNewGroup({...newGroup, participant3:text})}
+          value={participants.participant3}
+          onChangeText={(participant3) => setParticipants({...participants, participant3})}
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setNewGroup({...newGroup, participant4:text})}
+          value={participants.participant4}
+          onChangeText={(participant4) => setParticipants({...participants, participant4})}
         />
 
         <Buttons
@@ -77,12 +80,12 @@ export default function AlterRegister(){
           color={Colors.secondary}
           onPress={HandleAdd}
         />
-      </rn.ScrollView>
-    </rn.View>
+      </ScrollView>
+    </View>
   )
 }
 
-const styles = rn.StyleSheet.create({
+const styles = StyleSheet.create({
   textInput: {
     fontSize: 18,
     fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',

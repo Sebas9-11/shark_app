@@ -1,35 +1,34 @@
-import * as rn from 'react-native'
+import { TextInput, StyleSheet } from 'react-native'
 import { Colors } from '../constants/colors'
-import React from 'react'
-import { ButtonRegister } from './Buttons'
 
 export const Inputs = ({placeholder, type, securety, onchange, value , onChangeText}) => {
   return (
-    <rn.TextInput
+    <TextInput
       style={styles.textInput}
       placeholder={placeholder}
       keyboardType= {type}
-      value={value}
       secureTextEntry= {securety}
       onChangeText={onChangeText}
       onChange={onchange}
+      value={value}
     />
   )
 }
 
-export const TextArea = ({placeholder, onChangeText}) => {
+export const TextArea = ({placeholder, value, onChangeText}) => {
   return (
-    <rn.TextInput
+    <TextInput
       style={styles.textArea}
+      multiline 
       placeholder={placeholder}
-      multiline={true}
       numberOfLines={6}
-      onchangeText={onChangeText}
+      onChangeText={onChangeText} 
+      value={value}
     />
   )
 }
 
-const styles = rn.StyleSheet.create({
+const styles = StyleSheet.create({
   textInput: {
     fontSize: 18,
     fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
@@ -54,10 +53,8 @@ const styles = rn.StyleSheet.create({
     borderColor: Colors.black,
     borderRadius: 6,
     padding: 10,
-    marginVertical: 10,
+    marginVertical: 0,
     marginHorizontal:10,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
     backgroundColor: Colors.light
   },
 })
