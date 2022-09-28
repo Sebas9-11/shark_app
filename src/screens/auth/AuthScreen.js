@@ -2,17 +2,16 @@ import { View, Text, StyleSheet } from 'react-native'
 import { Buttons, Inputs} from '../../components'
 import { GlobalStyles } from '../../constants'
 import { BlurView } from 'expo-blur'
-import { Buttons} from '../../components/Buttons'
-import { Inputs } from '../../components/Inputs'
 import { Colors } from '../../constants/colors'
+import React from 'react'
 import { db } from '../../firebaseConfig';
 import * as Auth from 'firebase/auth'
+import { useNavigation } from '@react-navigation/native'
 
 export default function AuthScreen(){
-
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-
+  const navigation = useNavigation()
   const auth = Auth.getAuth()
 
   const handleCreateAcount = async () => {
@@ -36,9 +35,8 @@ export default function AuthScreen(){
       if (email && password) {
         await Auth.signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
-            // Signed in
             const user = userCredential.user;
-            // ...
+            navigation.navigate('Group')
             console.log(user)
           })
           .catch((error) => {

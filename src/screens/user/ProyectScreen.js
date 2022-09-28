@@ -3,7 +3,7 @@ import { ProyectHeader, ProyectDescription, ProyectParticipants }  from './compo
 import { ButtonRegister } from '../../components'
 import { GlobalStyles, GlobalLayouts, Colors } from '../../constants'
 import { useProyect } from './hooks/useProyect'
-
+import React from 'react'
 
 export default function ProyectScreen({ id }) {
 
@@ -16,10 +16,6 @@ export default function ProyectScreen({ id }) {
                     <ProyectHeader title={title} img={img}/>
                     <ProyectDescription description={description}/>
                     <ProyectParticipants participants={participants}/>
-                    <View style={GlobalLayouts({width: 300}).row} >
-                        <ButtonRegister title="Profile" color={Colors.primary}/>
-                        <ButtonRegister title="Judges" color={Colors.secondary}/>
-                    </View>
                 </View>
             </ScrollView >
         </View>
