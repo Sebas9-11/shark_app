@@ -1,7 +1,13 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, getAuth } from 'firebase/auth'
+<<<<<<< HEAD
 import { initializeApp } from 'firebase/app'
 import { getStorage } from 'firebase/storage'
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, where,getDoc } from 'firebase/firestore';
+=======
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { initializeApp } from 'firebase/app'
+import { getStorage } from 'firebase/storage'
+>>>>>>> registro
 import Constants  from 'expo-constants'
 
 class Firebase {
@@ -9,11 +15,12 @@ class Firebase {
     static db
     static auth 
     static storage
+    static app
 
     static init() {
         if (!Firebase.app) {
             Firebase.app = initializeApp(Constants.manifest.extra)
-            Firebase.db = getFirestore()
+            Firebase.db = getFirestore(Firebase.app)
             Firebase.auth = getAuth()
             Firebase.storage = getStorage()
         }
@@ -73,11 +80,13 @@ class Firebase {
     }
 
     static async getDocumentById(collectionName, id) {
-        
-        const data = await Firebase.db.collection('groups').get()
-        const arrayData = data.docs.map(doc => ({id: doc.id, ...doc.data()}))
-        console.log(arrayData)
-        return await arrayData
+        const q = query(collection(Firebase.db, collectionName), where("id", "==", id))
+
+        const querySnapshot = await getDocs(q)
+        querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data())
+        })
     }
       
 
@@ -103,7 +112,6 @@ class Firebase {
 
 Firebase.init()
 export const firebase = Firebase
-export const get = Firebase.getDocumentById
 export const db = Firebase.db
 export const storage = Firebase.storage
 // export const auth = Firebase.auth

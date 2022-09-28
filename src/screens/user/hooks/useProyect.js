@@ -9,7 +9,7 @@ export const useProyect = () => {
     // const [participants, setParticipants] = useState(null)
     const id = firebase.user
     useEffect( () => {
-        firebase.getDocumentById('groups', id)
+        firebase.getDocumentById('groups')
         // return onSnapshot
     }, [])
 
