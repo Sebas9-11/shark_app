@@ -1,8 +1,7 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
 import { initializeApp } from 'firebase/app'
 import { getStorage } from 'firebase/storage'
-import { collection, addDoc, onSnapshot, query, orderBy, where,getDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, where,getDoc } from 'firebase/firestore';
 import Constants  from 'expo-constants'
 
 class Firebase {
@@ -79,7 +78,7 @@ class Firebase {
         const arrayData = data.docs.map(doc => ({id: doc.id, ...doc.data()}))
         console.log(arrayData)
         return await arrayData
-      }
+    }
       
 
 

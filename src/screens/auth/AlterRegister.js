@@ -10,7 +10,10 @@ import { firebase } from '../../services/firebase'
 export default function AlterRegister(){
 
   const [newGroup, setNewGroup] = React.useState({
-    participants:[],
+    participant1: '',
+    participant2: '',
+    participant3: '',
+    participant4: '',
     group:'',
     desc:'',
     budget:0,
@@ -18,12 +21,6 @@ export default function AlterRegister(){
   })
 
   const HandleAdd = async () => {
-<<<<<<< HEAD
-    setNewGroup({
-      ...newGroup,participants:[name1,name2,name3,name4]})
-    await addDoc(collection(db, "groups"), newGroup);
-    navigation.navigate('Login')
-=======
     await firebase.addDocument("groups", newGroup)
       .then((id) => {
         console.log(id)
@@ -31,9 +28,7 @@ export default function AlterRegister(){
       .catch((error) => {
         console.log(error)
       })
->>>>>>> registro
   }
-
 
   return(
     <rn.View style={GlobalStyles.simpleContainer}>
@@ -62,19 +57,19 @@ export default function AlterRegister(){
         <Divider orientation="left" borderColor='black'>Info Participants</Divider>
         <Inputs 
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setName1(text)}
+          onChangeText={(text) => setNewGroup({...newGroup, participant1:text})}
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setName2(text)}
+          onChangeText={(text) => setNewGroup({...newGroup, participant2:text})}
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setName3(text)}
+          onChangeText={(text) => setNewGroup({...newGroup, participant3:text})}
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          onChangeText={(text) => setName4(text)}
+          onChangeText={(text) => setNewGroup({...newGroup, participant4:text})}
         />
 
         <Buttons
@@ -86,7 +81,6 @@ export default function AlterRegister(){
     </rn.View>
   )
 }
-
 
 const styles = rn.StyleSheet.create({
   textInput: {

@@ -17,19 +17,10 @@ export default function GroupStack() {
   const navigation = useNavigation()
 
   const handleSingOut = async () => {
-<<<<<<< HEAD
-    await Auth.signOut(auth).then(() => {
-      // Sign-out successful.
-      navigation.navigate('Login')
-    }).catch((error) => {
-      // An error happened.
-    });
-=======
     await firebase.signOut()
       .then(() => {
         navigation.navigate('Login')
       })
->>>>>>> registro
   }
 
   function logout(){

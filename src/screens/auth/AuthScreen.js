@@ -11,45 +11,6 @@ export default function AuthScreen(){
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const navigation = useNavigation()
-<<<<<<< HEAD
-  const auth = Auth.getAuth();
-
-  const handleCreateAcount = async () => {
-    if (email==='' || password===''){
-      Alert.alert('Atencion!' , 'Ingresa todos los campos')
-    }else if(email && password){
-      await Auth.createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          navigation.navigate('Register')
-          // ...
-          console.log(user)
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-        });
-    }
-  }
-
-  const handleSingIn = async () => {
-    if (email && password) {
-      await Auth.signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          navigation.navigate('Group')
-          const userActivo = auth.currentUser.uid
-          console.log('el usuario esta: ' ,userActivo)
-          //console.log(user)
-        })
-        .catch((error) => {
-          Alert.alert('Atencion!' , 'Usuario o contraseña incorrectos o no existe')
-          const errorCode = error.code;
-          const errorMessage = error.message;
-        });
-=======
 
   const handleCreateAcount = async () => {
     await firebase.signUp(email, password)
@@ -71,11 +32,8 @@ export default function AuthScreen(){
         .catch( error => {
           console.log(error.message)
         })
->>>>>>> registro
     }
-  }
-
-
+  
 
     
 
