@@ -1,17 +1,16 @@
-import { View,StyleSheet, ScrollView } from "react-native"
+import { View,StyleSheet, FlatList } from "react-native"
 import { JudgeItem } from "./components"
-import { GlobalLayouts, GlobalStyles } from "../../constants"
+import { GlobalStyles } from "../../constants"
 
-export default function JudgesScreen() {
+export default function JudgesScreen( { data } ) {
+
+    const itemBuilder = ({ item }) => {
+        return <JudgeItem aporte={item.aporte} nombre={item.nombre}/>
+    }
+
     return(
         <View style={GlobalStyles.simpleContainer}>
-            <ScrollView style={styles.scroll}>
-                <View style={GlobalLayouts({width: '90%'}).column}>
-                    <JudgeItem aporte={3000} nombre='Duan david castro'/>
-                    <JudgeItem aporte={3000} nombre='Juan david castro'/>
-                    <JudgeItem aporte={3000} nombre='Juan david castro'/> 
-                </View>
-            </ScrollView>
+            <FlatList data={data} renderItem={itemBuilder} />
         </View>
     )
 }
@@ -25,10 +24,6 @@ const styles = StyleSheet.create(
             borderRadius: 6,
             // marginVertical: 10,
             alignItems: "center",
-        },
-        scroll : {
-            width: '100%',
-            paddingHorizontal: 20,
         }
     }
 )
