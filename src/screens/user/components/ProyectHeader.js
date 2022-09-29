@@ -4,7 +4,7 @@ import { GlobalLayouts } from '../../../constants'
 export default function ProyectHeader({title, img}) {
     return(
         <View style={GlobalLayouts('100%').column}>
-            <Image source={{ uri: img }} style={styles.image}/>
+            <Image source={img} style={styles.image}/>
             <Text style={styles.header}> {title} </Text>
         </View>
     )
@@ -16,7 +16,10 @@ const styles = StyleSheet.create(
             width: 100,
             height: 100,
             borderRadius: 50,
-            marginBottom: 36
+            marginBottom: 36,
+            borderWidth: 4,
+            borderColor: '#fff',
+            backgroundColor: '#fff',
         },
         header: {
             fontSize: 30,
