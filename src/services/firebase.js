@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, getAuth } from 'firebase/auth'
 import { getFirestore, collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { initializeApp } from 'firebase/app'
-import { getStorage } from 'firebase/storage'
+import { getDownloadURL, getStorage, ref } from 'firebase/storage'
 import Constants  from 'expo-constants'
 
 class Firebase {
@@ -73,6 +73,15 @@ class Firebase {
         throw new Error('Error with credentials')
     }
 
+    static async getImage() {
+        const reference =  ref(Firebase.storage, `${Firebase.user}.jpg`)
+        return getDownloadURL(reference).then( 
+            (url) => {
+                return url
+            }
+        )
+    }
+
     static async getDocumentById(collectionName, id) {
         const response = []
         const q = query(collection(Firebase.db, collectionName), where("id", "==", id))
@@ -84,7 +93,7 @@ class Firebase {
         querySnapshot.forEach((doc) => {
             response.push(doc.data())
         })
-        return [response, q]
+        return response
     }   
 }
 
