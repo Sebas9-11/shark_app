@@ -1,7 +1,7 @@
 import { View,StyleSheet, FlatList } from "react-native"
 import { JudgeItem } from "./components"
 import { GlobalStyles } from "../../constants"
-import { useJudges } from "./hooks/useJudges"
+import { useJudges } from './hooks/useJudges';
 
 export default function JudgesScreen() {
     const [judges] = useJudges()

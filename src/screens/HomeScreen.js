@@ -1,5 +1,4 @@
 import * as rn from 'react-native'
-import { Inputs } from '../components/Inputs'
 import React from 'react'
 
 export default function HomeScreen(){

@@ -1,10 +1,24 @@
 import GroupStack from "./GroupStack";
 import HomeStack from "./HomeStack";
+import { firebase } from "../services/firebase";
 
 export default function Rols () {
 
-  const rol = '1'
+  function Rol() {
+    const [typeUser] = firebase.group
+    console.log(typeUser)
+    if (typeUser.rol === "user") {
+      return (
+        <GroupStack />
+      );
+    } else {
+      return (
+        <HomeStack />
+      );
+    }
+  }
+
   return (
-    rol === '1' ? <GroupStack/> : <HomeStack/>
-  )
+    <Rol />
+  );
 }
