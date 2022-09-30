@@ -6,9 +6,10 @@ export const useProyect = () => {
     const [proyect, setProyect] = useState(null)
     const [image, setImage] = useState(null)
 
-    async function getProyect() {
+    function getProyect() {
         try {
-            const [ response ] = await firebase.getDocumentById('groups',firebase.user)
+            const [response]  = firebase.group
+            console.log(response)
             const picture  =  response.image !== '' ? {uri: response.image} : img
             setImage(picture)
             setProyect(response) 

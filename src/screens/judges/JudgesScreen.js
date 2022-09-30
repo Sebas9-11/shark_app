@@ -1,16 +1,18 @@
 import { View,StyleSheet, FlatList } from "react-native"
 import { JudgeItem } from "./components"
 import { GlobalStyles } from "../../constants"
+import { useJudges } from "./hooks/useJudges"
 
-export default function JudgesScreen( { data } ) {
+export default function JudgesScreen() {
+    const [judges] = useJudges()
 
-    const itemBuilder = ({ item }) => {
-        return <JudgeItem aporte={item.aporte} nombre={item.nombre}/>
+    const itemBuilder = ({item}) => {
+        return <JudgeItem aporte={item.money} nombre={item.name}/>
     }
 
     return(
         <View style={GlobalStyles.simpleContainer}>
-            <FlatList data={data} renderItem={itemBuilder} />
+            <FlatList data={judges} renderItem={itemBuilder} />
         </View>
     )
 }
