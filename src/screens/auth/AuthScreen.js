@@ -26,7 +26,7 @@ export default function AuthScreen(){
     const handleSingIn = async () => {
       await firebase.signIn(email, password)
         .then(user => {
-          navigation.navigate('Group')
+          navigation.navigate('Rols')
           console.log(user)
         })
         .catch( error => {

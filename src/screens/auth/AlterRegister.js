@@ -1,4 +1,4 @@
-import { View, TextInput, Text, ScrollView, StyleSheet, TouchableOpacity,Image } from 'react-native'
+import { View, TextInput, Text, ScrollView, StyleSheet, TouchableOpacity,Image, Alert } from 'react-native'
 import { Inputs , TextArea, Buttons} from '../../components'
 import { GlobalStyles, Colors } from '../../constants'
 import Divider from 'react-native-divider'
@@ -6,8 +6,11 @@ import { firebase } from '../../services/firebase'
 import { useRef, useState } from 'react'
 import img from '../../../assets/group.png'
 import { pickImage, upload } from './utils/images'
+import { useNavigation } from '@react-navigation/native'
 
 export default function AlterRegister(){
+
+  const navigation = useNavigation()
   const [image, setImage ] = useState(img)
   const [participants, setParticipants] = useState({})
   const toUpload = useRef(false)
@@ -19,26 +22,29 @@ export default function AlterRegister(){
     group:'',
     desc:'',
     budget:0,
+    rol:'user',
     id: firebase.user
   })
 
-  const HandleAdd = async () => {
+  const Validation = async () => {
     let group = {...newGroup, participants}
-    if (toUpload.current) {
-      console.log('uploading')
-      const url = await upload(image.uri)
-
-      group = {...group, image: url}
-    }
-
-      
-    firebase.addDocument("groups", group)
+    if(group.group === '' || group.desc === '' || group.budget === ''){
+      Alert.alert('Digita los campos vacios')
+    }else{
+      if(toUpload.current){
+        console.log('uploading')
+        const url = await upload(image)
+        group = {...group, image: url}
+      }
+      firebase.addDocument('groups', group)
       .then((id) => {
         console.log(id)
+        navigation.navigate('Login')
       })
-      .catch((error) => {
-        console.log(error)
+      .catch((err) => {
+        console.log(err)
       })
+    }
   }
 
   const handlePress = async () => {
@@ -58,7 +64,7 @@ export default function AlterRegister(){
           <Image source={image} style={styles.image}/>
         </TouchableOpacity>       
         <Divider orientation="left" borderColor='black'>Info Group</Divider>
-        <Inputs 
+        <Inputs
           placeholder="Name of group"
           value={newGroup.group}
           onChangeText={(group) => setNewGroup({...newGroup, group})}
@@ -104,7 +110,7 @@ export default function AlterRegister(){
         <Buttons
           title="Save"
           color={Colors.secondary}
-          onPress={HandleAdd}
+          onPress={Validation}
         />
       </ScrollView>
     </View>
