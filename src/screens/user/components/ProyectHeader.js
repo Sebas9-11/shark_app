@@ -16,7 +16,10 @@ const styles = StyleSheet.create(
             width: 100,
             height: 100,
             borderRadius: 50,
-            marginBottom: 36
+            marginBottom: 36,
+            borderWidth: 4,
+            borderColor: '#fff',
+            backgroundColor: '#fff',
         },
         header: {
             fontSize: 30,

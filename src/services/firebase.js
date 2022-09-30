@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, getAuth } from 'firebase/auth'
 import { getFirestore, collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { initializeApp } from 'firebase/app'
-import { getStorage } from 'firebase/storage'
+import { getDownloadURL, getStorage, ref, uploadBytes  } from 'firebase/storage'
 import Constants  from 'expo-constants'
 
 class Firebase {
@@ -84,8 +84,21 @@ class Firebase {
         querySnapshot.forEach((doc) => {
             response.push(doc.data())
         })
-        return [response, q]
+        return response
     }   
+
+    static async uploadImage(blop,name) {
+        const allowedExtensions = ['jpg', 'jpeg', 'png']
+        const extension = name.split('.').pop()
+
+        if (!allowedExtensions.includes(extension)){
+            throw new Error('Extension no permitida')
+        }
+
+        const reference = ref(Firebase.storage, `groups_images/${name}`)
+        await uploadBytes(reference, blop)
+        return getDownloadURL(reference).then((downloadURL) => downloadURL)
+    }
 }
 
 Firebase.init()
