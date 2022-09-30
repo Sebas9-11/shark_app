@@ -10,6 +10,7 @@ class Firebase {
     static auth 
     static storage
     static app
+    static group
 
     static init() {
         if (!Firebase.app) {
@@ -26,8 +27,9 @@ class Firebase {
                 .then( userCredential => {
                     Firebase.user = userCredential.user.uid
                     return Firebase.user
-                } 
-            )
+                }).then( async () => {
+                    Firebase.group = await Firebase.getGroups(true)
+                })
         }
         throw new Error('Verifique los campos')
     }
@@ -86,6 +88,27 @@ class Firebase {
         })
         return response
     }   
+
+    static async getGroups(onlyOne) {
+        const response = []
+        console.log(Firebase.user)
+        let q
+        if (onlyOne)    {
+            q = query(collection(Firebase.db, 'groups'),where("id", "==", Firebase.user))
+        } else {
+            q = query(collection(Firebase.db, 'groups'))
+        }
+
+        const querySnapshot = await getDocs(q)
+        .catch((error) => {
+            console.log(error.message)
+        })
+
+        querySnapshot.forEach((doc) => {
+            response.push(doc.data())
+        })
+        return response
+    }
 
     static async uploadImage(blop,name) {
         const allowedExtensions = ['jpg', 'jpeg', 'png']
