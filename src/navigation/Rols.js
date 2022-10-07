@@ -1,6 +1,5 @@
 import GroupStack from "./GroupStack";
 import HomeStack from "./HomeStack";
-import { firebase } from "../services/firebase";
 
 export default function Rols () {
 
