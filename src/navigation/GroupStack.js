@@ -8,10 +8,6 @@ import { Colors } from "../constants";
 
 const Drawer = createDrawerNavigator();
 
-function Home(){
-  return <ProyectScreen id={1}/>
-} 
-
 export default function GroupStack() {
 
   const navigation = useNavigation()
@@ -41,7 +37,7 @@ export default function GroupStack() {
       ),
       drawerActiveBackgroundColor: Colors.background,
     }}>
-      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Home" component={ProyectScreen} />
       <Drawer.Screen name="Judges" component={JudgesScreen}/>
     </Drawer.Navigator>
   );

@@ -9,7 +9,6 @@ export const useProyect = () => {
     function getProyect() {
         try {
             const [response]  = firebase.group
-            console.log(response)
             const picture  =  response.image !== '' ? {uri: response.image} : img
             setImage(picture)
             setProyect(response) 

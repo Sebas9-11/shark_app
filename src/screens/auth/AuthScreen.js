@@ -16,7 +16,6 @@ export default function AuthScreen(){
     await firebase.signUp(email, password)
       .then(user => {
         navigation.navigate('Register')
-        console.log(user)
       })
       .catch( error => {
         Alert.alert('Error', error.message)
