@@ -1,10 +1,7 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 import { ProyectJudgeHeader, ProyectJudgeDescription } from "./components";
-import { GlobalStyles } from "../../constants";
 import { useJudgeProyect } from "./hooks/useProyect";
 import React from "react";
-import { Buttons } from "../../components/Buttons";
-import { Colors } from "../../constants/colors";
 
 export default function ProyectJudgesScreen() {
   const [proyect, image] = useJudgeProyect();
