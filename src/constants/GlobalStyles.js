@@ -6,33 +6,34 @@ export const GlobalStyles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.danger,
   },
-  simpleContainer: {  
+  simpleContainer: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.White,
     paddingTop: Platform.OS === "android" ? 40 : 60,
   },
-  titles:{
+  titles: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
-    textAlign:"center"
-  }
+    textAlign: "center",
+  },
 });
 
-export const GlobalLayouts = ( {width} ) => StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: "center",
-    width: width ? width : '100%',
-  },
-  column: {
-      flexDirection: 'column',
-      justifyContent: 'space-between',
+export const GlobalLayouts = ({ width }) =>
+  StyleSheet.create({
+    row: {
+      flexDirection: "row",
+      justifyContent: "space-between",
       alignItems: "center",
-      width: width ? width : '100%',
-  },
-});
+      width: width ? width : "100%",
+    },
+    column: {
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: width ? width : "100%",
+    },
+  });

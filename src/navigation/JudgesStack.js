@@ -1,15 +1,14 @@
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import JudgesScreen from "../screens/judges/JudgesScreen";
-import ProyectScreen from "../screens/user/ProyectScreen";
-import { TouchableOpacity } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ProyectJudgesScreen from "../screens/judgesProfiles/ProyectScreen";
 import { useNavigation } from "@react-navigation/native";
 import { firebase } from "../services/firebase";
-import { Colors } from "../constants";
+import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "../constants";
 
-const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
-export default function GroupStack() {
+export default function JudgesStack() {
   const navigation = useNavigation();
 
   const handleSingOut = async () => {
@@ -33,24 +32,17 @@ export default function GroupStack() {
       </TouchableOpacity>
     );
   }
-
   return (
-    <Drawer.Navigator
+    <Stack.Navigator
       screenOptions={{
         headerRight: () => logout(),
+        headerTitleAlign: "center",
+        headerStyle: {
+          backgroundColor: Colors.danger,
+        },
       }}
     >
-      <Drawer.Group
-        screenOptions={{
-          headerTitleAlign: "center",
-          headerStyle: {
-            backgroundColor: Colors.danger,
-          },
-        }}
-      >
-        <Drawer.Screen name="Home" component={ProyectScreen} />
-        <Drawer.Screen name="Judges" component={JudgesScreen} />
-      </Drawer.Group>
-    </Drawer.Navigator>
+      <Stack.Screen name="Judges" component={ProyectJudgesScreen} />
+    </Stack.Navigator>
   );
 }

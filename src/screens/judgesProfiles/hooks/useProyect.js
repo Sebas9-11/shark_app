@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { firebase } from "../../../services/firebase";
 import img from "../../../../assets/group.png";
 
-export const useProyect = () => {
+export const useJudgeProyect = () => {
   const [proyect, setProyect] = useState(null);
   const [image, setImage] = useState(null);
 
