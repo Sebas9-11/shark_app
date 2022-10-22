@@ -11,7 +11,7 @@ export default function ModalView({
   nameGroup,
   description,
 }) {
-  const [money, setMoney] = React.useState(0);
+  const [amount, setAmount] = React.useState(0);
 
   return (
     <View style={styles.centeredView}>
@@ -25,7 +25,11 @@ export default function ModalView({
           <View style={styles.modalView}>
             <Text style={styles.modalText}>{nameGroup}</Text>
             <Text style={styles.modalText}>{description}</Text>
-            <Inputs placeholder="Cantidad" type="numeric" />
+            <Inputs
+              placeholder="Cantidad"
+              type="numeric"
+              onChangeText={(text) => setAmount(text)}
+            />
             <View
               style={{
                 flexDirection: "row",
