@@ -1,26 +1,43 @@
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import { Colors } from "../constants/colors";
+import { Button } from "react-native-paper";
 
 export const Buttons = ({ title, onPress, color }) => {
   return (
-    <TouchableOpacity
+    <Button
       style={[styles.container, { backgroundColor: color }]}
+      color={Colors.white}
+      mode="text"
       onPress={onPress}
     >
-      <Text style={styles.text}>{title}</Text>
-    </TouchableOpacity>
+      {title}
+    </Button>
+    // <TouchableOpacity
+    //   style={[styles.container, { backgroundColor: color }]}
+    //   onPress={onPress}
+    // >
+    //   <Text style={styles.text}>{title}</Text>
+    // </TouchableOpacity>
   );
 };
 
 export const ButtonRegister = ({ title, onPress, color }) => {
   return (
-    <TouchableOpacity
+    <Button
       style={[styles.buttonRegister, { backgroundColor: color }]}
+      color={Colors.white}
+      mode="contained"
       onPress={onPress}
     >
-      <Text style={styles.text}>{title}</Text>
-    </TouchableOpacity>
+      {title}
+    </Button>
+    // <TouchableOpacity
+    //   style={[styles.buttonRegister, { backgroundColor: color }]}
+    //   onPress={onPress}
+    // >
+    //   <Text style={styles.text}>{title}</Text>
+    // </TouchableOpacity>
   );
 };
 
@@ -29,16 +46,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 40,
     borderRadius: 6,
-    alignItems: "center",
     justifyContent: "center",
     marginVertical: 5,
-    borderWidth: 1,
+    marginHorizontal: 5,
   },
   buttonRegister: {
-    width: "35%",
+    width: "100%",
     height: 40,
     borderRadius: 6,
-    alignItems: "center",
     justifyContent: "center",
     marginVertical: 5,
   },

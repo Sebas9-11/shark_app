@@ -1,10 +1,17 @@
-import { View, Text, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import React from "react";
 import { Card, Button } from "react-native-paper";
-
 import { Colors } from "../constants";
 
-export default function Cards({ title, content, uri, on }) {
+export default function Cards({
+  title,
+  content,
+  uri,
+  on,
+  onPressButton1,
+  onpressButton2,
+  presupuesto,
+}) {
   const ButtonsTrue = ({ button }) => {
     if (button == true) {
       return (
@@ -13,15 +20,15 @@ export default function Cards({ title, content, uri, on }) {
             style={styles.button}
             color={Colors.primary}
             mode="contained"
-            onPress={() => console.log("Unirme")}
+            onPress={onPressButton1}
           >
-            Unirme ☝🏼
+            Aportar ☝🏼
           </Button>
           <Button
             style={styles.button}
             color={Colors.primary}
             mode="contained"
-            onPress={() => console.log("Rechazar")}
+            onPress={onpressButton2}
           >
             Rechazar 👎🏽
           </Button>
@@ -35,6 +42,7 @@ export default function Cards({ title, content, uri, on }) {
     <Card style={styles.card}>
       <Card.Title title={title} />
       <Card.Content>
+        <Text>Presupuesto: ${presupuesto}</Text>
         <Text>{content}</Text>
       </Card.Content>
       <Card.Cover style={styles.image} source={{ uri: uri }} />

@@ -1,20 +1,10 @@
-import * as rn from 'react-native'
-import React from 'react'
+import { View, Text } from "react-native";
+import React from "react";
 
-export default function HomeScreen(){
+export default function HomeScreen() {
   return (
-    // mi commit
-    <rn.View style={styles.container}>
-      <rn.Text>Home</rn.Text>
-    </rn.View>
-  )
+    <View>
+      <Text>HomeScreen</Text>
+    </View>
+  );
 }
-
-
-const styles = rn.StyleSheet.create({
-  container:{
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-})
