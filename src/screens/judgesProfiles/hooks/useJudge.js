@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
 import { firebase } from "../../../services/firebase";
 
-export const useProyect = () => {
-  const [proyect, setProyect] = useState(null);
+export const useJudge = () => {
+  const [jusgeState, setJusgeState] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = firebase.getSnapShotById('groups', firebase.user,
+    const unsubscribe = firebase.getSnapShotById('judges', firebase.user,
       (querySnapshot) => {
-        const [ proyect ] = querySnapshot.docs.map(docSnapshot => docSnapshot.data());
-        setProyect(proyect);
+        const [ judge ] = querySnapshot.docs.map(docSnapshot => docSnapshot.data());
+        setJusgeState(judge);
       },
       (error) => setError('Failed to fetch: ' + error.message)
     );
     
     setLoading(false);
     return unsubscribe;
-  }, [proyect, setProyect]);
+  }, [jusgeState, setJusgeState]);
 
-  return [proyect, loading, error];
+  return [jusgeState, loading, error];
 };

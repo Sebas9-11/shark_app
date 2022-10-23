@@ -1,30 +1,43 @@
 import * as React from "react";
-import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { Modal, StyleSheet, Text, View, Alert } from "react-native";
+import { SnackAlert } from "../components/SnackAlert";
+import { firebase } from "../services/firebase";
 import { Buttons } from "./Buttons";
 import { Inputs } from "./Inputs";
 
-export default function ModalView({
-  visible,
-  onRequestClose,
-  hidenModal,
-  sendMoney,
-  nameGroup,
-  description,
-}) {
+
+export default function ModalView({ group, hidenModal }) {
   const [amount, setAmount] = React.useState(0);
+  const actualGroup = React.useRef(group);
+  
+  const sendMoney = async () => {
+    try {
+      const money = parseFloat(amount) + parseFloat(actualGroup.current.collection);
+      await firebase.sendMoney(actualGroup.current.id, money);
+      // SnackAlert("Dinero enviado");
+      hidenModal();
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    }
+  };
+
+  
+  const requestClose = () => {
+    Alert.alert("Modal has been closed.");
+    setModalVisible(!modalVisible);
+  }
 
   return (
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={visible}
-        onRequestClose={onRequestClose}
+        onRequestClose={requestClose}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>{nameGroup}</Text>
-            <Text style={styles.modalText}>{description}</Text>
+            <Text style={styles.modalText}>{actualGroup.current?.group}</Text>
+            <Text style={styles.modalText}>{actualGroup.current?.desc}</Text>
             <Inputs
               placeholder="Cantidad"
               type="numeric"

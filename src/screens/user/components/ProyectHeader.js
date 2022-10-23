@@ -1,10 +1,14 @@
 import { View, Image, Text,StyleSheet } from 'react-native'
 import { GlobalLayouts } from '../../../constants'
+import image from '../../../../assets/group.png'
 
 export default function ProyectHeader({title, img}) {
     return(
         <View style={GlobalLayouts('100%').column}>
-            <Image source={img} style={styles.image}/>
+            {
+                img == "" ? <Image source={image} style={styles.image}/> : 
+                <Image source={{uri: img}} style={styles.image}/>
+            }
             <Text style={styles.header}> {title} </Text>
         </View>
     )

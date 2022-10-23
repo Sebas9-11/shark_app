@@ -11,6 +11,9 @@ import {
   where,
   getDocs,
   addDoc,
+  updateDoc,
+  getDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
@@ -23,7 +26,6 @@ class Firebase {
   static storage;
   static app;
   static userType;
-  static userData;
 
   static init() {
     if (!Firebase.app) {
@@ -43,14 +45,7 @@ class Firebase {
       );
 
       Firebase.user = credential.user.uid;
-
       Firebase.userType = await Firebase.getById("users", Firebase.user);
-      if (Firebase.userType[0].rol == "user") {
-        Firebase.userData = await Firebase.getById("groups", Firebase.user);
-      } else {
-        Firebase.userData = await Firebase.getById("judges", Firebase.user);
-      }
-
       return Firebase.user;
     }
 
@@ -101,6 +96,7 @@ class Firebase {
       collection(Firebase.db, collectionName),
       where("id", "==", id)
     );
+    
     const querySnapshot = await getDocs(q).catch((error) => {
       console.log(error.message);
     });
@@ -111,19 +107,19 @@ class Firebase {
     return response;
   }
 
-  static async getGroups() {
-    const response = [];
+  static getSnapShotById(collectionName, id, snapshot, error) {
+    const documentQuery = query(
+      collection(Firebase.db, collectionName),
+      where("id", "==", id)
+    );
+     
+    return onSnapshot(documentQuery, snapshot, error)
+  }
 
-    let q = query(collection(Firebase.db, "groups"));
+  static getGroups(snapshot, error) {
+    let groupQuery = query(collection(Firebase.db, "groups"));
 
-    const querySnapshot = await getDocs(q).catch((error) => {
-      console.log(error.message);
-    });
-
-    querySnapshot.forEach((doc) => {
-      response.push(doc.data());
-    });
-    return response;
+    return onSnapshot(groupQuery, snapshot, error)
   }
 
   //upload image to firebase storage
@@ -138,6 +134,65 @@ class Firebase {
     const reference = ref(Firebase.storage, `groups_images/${name}`);
     await uploadBytes(reference, blop);
     return getDownloadURL(reference).then((downloadURL) => downloadURL);
+  }
+
+  // send money to the group
+  static async sendMoney(id, money) {
+    
+    money = parseFloat(money)
+
+    // get the group
+    const groupQuery = query(
+      collection(Firebase.db, "groups"),
+      where("id", "==", id)
+    );
+
+    // get the judge
+    const judgeQuery = query(
+      collection(Firebase.db, "judges"),
+      where("id", "==", Firebase.user)
+    );
+  
+    // get the judge data
+    const judgeResponse  = await getDocs(judgeQuery)
+    const [ judge ] = judgeResponse.docs
+    const judgeData = judge.data()
+
+    // check if the judge has enough money
+    if (judgeData.money < money) {
+      throw new Error("No tienes suficiente dinero")
+    }
+    
+    // get the group data
+    const groupResponse  =  await getDocs(groupQuery)
+    const [ group ] = groupResponse.docs
+    const groupData = group.data()
+    // check if the judge has invested in the group
+    groupData.judges.forEach((investor) => {
+      console.log(Firebase.userData.name)
+      console.log(investor.name)
+      if (investor.name == judgeData.name) {
+        throw new Error("Ya has invertido en este grupo")
+      }
+    })
+
+
+    // update the judge money
+    const updateJudge = {
+      money: judgeData.money - money
+    }
+
+    await updateDoc(judge.ref, updateJudge)
+
+    // update the group collection
+    const updateGroup = {
+      collection: groupData.collection + money,
+      judges: [...groupData.judges, { name: judgeData.name, money }]
+    }
+
+    await updateDoc(group.ref, updateGroup)
+
+    Firebase.userDate = { ...judgeData, ...updateJudge }
   }
 }
 

@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
 import { firebase } from "../../../services/firebase";
 
-export const useProyect = () => {
-  const [proyect, setProyect] = useState(null);
+export const useGroups = () => {
+  const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = firebase.getSnapShotById('groups', firebase.user,
+    const unsubscribe = firebase.getGroups(
       (querySnapshot) => {
-        const [ proyect ] = querySnapshot.docs.map(docSnapshot => docSnapshot.data());
-        setProyect(proyect);
+        const groups = querySnapshot.docs.map(docSnapshot => docSnapshot.data());
+        setGroups(groups);
       },
       (error) => setError('Failed to fetch: ' + error.message)
     );
-    
+
     setLoading(false);
     return unsubscribe;
-  }, [proyect, setProyect]);
+  }, [groups,setGroups]);
 
-  return [proyect, loading, error];
+  return [groups, setGroups, loading, error];
 };

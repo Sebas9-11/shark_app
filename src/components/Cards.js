@@ -46,7 +46,6 @@ export default function Cards({
         <Text>{content}</Text>
         <Card.Cover style={styles.image} source={{ uri: uri }} />
       </Card.Content>
-
       <ButtonsTrue button={on} />
     </Card>
   );

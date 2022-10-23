@@ -1,1 +1,2 @@
-export * from "./useJudgeProyect";
+export * from './index';
+export * from './useGroups';
