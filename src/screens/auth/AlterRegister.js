@@ -21,22 +21,18 @@ export default function AlterRegister() {
   const navigation = useNavigation();
   const [image, setImage] = useState(img);
   const [participants, setParticipants] = useState({});
-  const toUpload = useRef(false);
+  const toUpload = useRef(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [newGroup, setNewGroup] = useState({
     image: "",
-    judges: {},
+    judges: [],
     collection: 0,
     group: "",
     desc: "",
     budget: 0,
   });
-
-  const handleCreateAcount = async () => {
-    return await firebase.signUp(email, password);
-  };
 
   const Validation = async () => {
     let group = { ...newGroup, participants };
@@ -45,16 +41,17 @@ export default function AlterRegister() {
     } else {
       try {
         if (toUpload.current) {
-          console.log("uploading");
-          const url = await upload(image);
+          const url = await upload(toUpload.current);
           group = { ...group, image: url };
         }
-        const groupId = await handleCreateAcount();
+
+        const groupId = await firebase.signUp(email, password);
         await firebase.addDocument("users", { id: groupId, rol: "user" });
-        await firebase.addDocument("groups", { ...group, id: groupId });
+        group = { ...group, id: groupId }
+        await firebase.addDocument("groups", group);
         navigation.navigate("Login");
       } catch (error) {
-        Alert.alert(error);
+        Alert.alert(JSON.stringify(error));
       }
     }
   };
@@ -63,8 +60,7 @@ export default function AlterRegister() {
     const result = await pickImage();
     if (!result.cancelled) {
       setImage({ uri: result.uri });
-      toUpload.current = true;
-      console.log(result.uri);
+      toUpload.current = result.uri;
     }
   };
 

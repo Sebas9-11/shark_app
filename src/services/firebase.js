@@ -11,6 +11,8 @@ import {
   where,
   getDocs,
   addDoc,
+  updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
@@ -24,6 +26,7 @@ class Firebase {
   static app;
   static userType;
   static userData;
+  static groups;
 
   static init() {
     if (!Firebase.app) {
@@ -48,6 +51,7 @@ class Firebase {
       if (Firebase.userType[0].rol == "user") {
         Firebase.userData = await Firebase.getById("groups", Firebase.user);
       } else {
+        Firebase.groups = await Firebase.getGroups();
         Firebase.userData = await Firebase.getById("judges", Firebase.user);
       }
 
@@ -138,6 +142,65 @@ class Firebase {
     const reference = ref(Firebase.storage, `groups_images/${name}`);
     await uploadBytes(reference, blop);
     return getDownloadURL(reference).then((downloadURL) => downloadURL);
+  }
+
+  // send money to the group
+  static async sendMoney(id, money) {
+    
+    money = parseFloat(money)
+
+    // get the group
+    const groupQuery = query(
+      collection(Firebase.db, "groups"),
+      where("id", "==", id)
+    );
+
+    // get the judge
+    const judgeQuery = query(
+      collection(Firebase.db, "judges"),
+      where("id", "==", Firebase.user)
+    );
+  
+    // get the judge data
+    const judgeResponse  = await getDocs(judgeQuery)
+    const [ judge ] = judgeResponse.docs
+    const judgeData = judge.data()
+
+    // check if the judge has enough money
+    if (judgeData.money < money) {
+      throw new Error("No tienes suficiente dinero")
+    }
+    
+    // get the group data
+    const groupResponse  =  await getDocs(groupQuery)
+    const [ group ] = groupResponse.docs
+    const groupData = group.data()
+    // check if the judge has invested in the group
+    groupData.judges.forEach((investor) => {
+      console.log(Firebase.userData.name)
+      console.log(investor.name)
+      if (investor.name == judgeData.name) {
+        throw new Error("Ya has invertido en este grupo")
+      }
+    })
+
+
+    // update the judge money
+    const updateJudge = {
+      money: judgeData.money - money
+    }
+
+    await updateDoc(judge.ref, updateJudge)
+
+    // update the group collection
+    const updateGroup = {
+      collection: groupData.collection + money,
+      judges: [...groupData.judges, { name: judgeData.name, money }]
+    }
+
+    await updateDoc(group.ref, updateGroup)
+
+    Firebase.userDate = { ...judgeData, ...updateJudge }
   }
 }
 

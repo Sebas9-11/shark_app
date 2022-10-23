@@ -7,7 +7,7 @@ export const pickImage = async () => {
         return await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [4, 4],
             quality: 1,
         })
     } catch (error) {
