@@ -2,6 +2,7 @@ import { Text, StyleSheet } from "react-native";
 import React from "react";
 import { Card, Button } from "react-native-paper";
 import { Colors } from "../constants";
+import image from "../../assets/group.png";
 
 export default function Cards({
   title,
@@ -46,6 +47,11 @@ export default function Cards({
         <Text>{content}</Text>
         <Card.Cover style={styles.image} source={{ uri: uri }} />
       </Card.Content>
+      {uri == "" ? (
+        <Card.Cover style={styles.image} source={{ uri: uri }} />
+      ) : (
+        <Card.Cover style={styles.image} source={image} />
+      )}
       <ButtonsTrue button={on} />
     </Card>
   );
