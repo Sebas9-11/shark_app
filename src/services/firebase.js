@@ -158,8 +158,9 @@ class Firebase {
     const [ judge ] = judgeResponse.docs
     const judgeData = judge.data()
 
+    const judgeMoney = parseFloat(judgeData.money)
     // check if the judge has enough money
-    if (judgeData.money < money) {
+    if (judgeMoney < money) {
       throw new Error("No tienes suficiente dinero")
     }
     
@@ -169,8 +170,6 @@ class Firebase {
     const groupData = group.data()
     // check if the judge has invested in the group
     groupData.judges.forEach((investor) => {
-      console.log(Firebase.userData.name)
-      console.log(investor.name)
       if (investor.name == judgeData.name) {
         throw new Error("Ya has invertido en este grupo")
       }
@@ -178,15 +177,18 @@ class Firebase {
 
 
     // update the judge money
+    const judgeMoneyUpdate = judgeMoney - money
     const updateJudge = {
-      money: judgeData.money - money
+      money: judgeMoneyUpdate
     }
 
     await updateDoc(judge.ref, updateJudge)
 
     // update the group collection
+    const groupMoney = parseFloat(groupData.collection)
+    const groupMoneyUpdate = groupMoney + money
     const updateGroup = {
-      collection: groupData.collection + money,
+      collection: groupMoneyUpdate,
       judges: [...groupData.judges, { name: judgeData.name, money }]
     }
 
