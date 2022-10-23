@@ -96,7 +96,7 @@ class Firebase {
       collection(Firebase.db, collectionName),
       where("id", "==", id)
     );
-    
+
     const querySnapshot = await getDocs(q).catch((error) => {
       console.log(error.message);
     });
@@ -112,14 +112,14 @@ class Firebase {
       collection(Firebase.db, collectionName),
       where("id", "==", id)
     );
-     
-    return onSnapshot(documentQuery, snapshot, error)
+
+    return onSnapshot(documentQuery, snapshot, error);
   }
 
   static getGroups(snapshot, error) {
     let groupQuery = query(collection(Firebase.db, "groups"));
 
-    return onSnapshot(groupQuery, snapshot, error)
+    return onSnapshot(groupQuery, snapshot, error);
   }
 
   //upload image to firebase storage
@@ -138,8 +138,7 @@ class Firebase {
 
   // send money to the group
   static async sendMoney(id, money) {
-    
-    money = parseFloat(money)
+    money = parseFloat(money);
 
     // get the group
     const groupQuery = query(
@@ -152,47 +151,46 @@ class Firebase {
       collection(Firebase.db, "judges"),
       where("id", "==", Firebase.user)
     );
-  
+
     // get the judge data
-    const judgeResponse  = await getDocs(judgeQuery)
-    const [ judge ] = judgeResponse.docs
-    const judgeData = judge.data()
+    const judgeResponse = await getDocs(judgeQuery);
+    const [judge] = judgeResponse.docs;
+    const judgeData = judge.data();
 
     // check if the judge has enough money
     if (judgeData.money < money) {
-      throw new Error("No tienes suficiente dinero")
+      throw new Error("No tienes suficiente dinero");
     }
-    
+
     // get the group data
-    const groupResponse  =  await getDocs(groupQuery)
-    const [ group ] = groupResponse.docs
-    const groupData = group.data()
+    const groupResponse = await getDocs(groupQuery);
+    const [group] = groupResponse.docs;
+    const groupData = group.data();
     // check if the judge has invested in the group
     groupData.judges.forEach((investor) => {
-      console.log(Firebase.userData.name)
-      console.log(investor.name)
+      // console.log(Firebase.userData.name)
+      // console.log(investor.name)
       if (investor.name == judgeData.name) {
-        throw new Error("Ya has invertido en este grupo")
+        throw new Error("Ya has invertido en este grupo");
       }
-    })
-
+    });
 
     // update the judge money
     const updateJudge = {
-      money: judgeData.money - money
-    }
+      money: judgeData.money - money,
+    };
 
-    await updateDoc(judge.ref, updateJudge)
+    await updateDoc(judge.ref, updateJudge);
 
     // update the group collection
     const updateGroup = {
       collection: groupData.collection + money,
-      judges: [...groupData.judges, { name: judgeData.name, money }]
-    }
+      judges: [...groupData.judges, { name: judgeData.name, money }],
+    };
 
-    await updateDoc(group.ref, updateGroup)
+    await updateDoc(group.ref, updateGroup);
 
-    Firebase.userDate = { ...judgeData, ...updateJudge }
+    Firebase.userDate = { ...judgeData, ...updateJudge };
   }
 }
 
