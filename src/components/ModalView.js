@@ -12,9 +12,7 @@ export default function ModalView({ group, hidenModal }) {
   
   const sendMoney = async () => {
     try {
-      const money = parseFloat(amount) + parseFloat(actualGroup.current.collection);
-      await firebase.sendMoney(actualGroup.current.id, money);
-      // SnackAlert("Dinero enviado");
+      await firebase.sendMoney(actualGroup.current.id, amount);
       hidenModal();
     } catch (error) {
       Alert.alert("Error", error.message);

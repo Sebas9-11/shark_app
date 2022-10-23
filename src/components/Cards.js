@@ -13,6 +13,14 @@ export default function Cards({
   onpressButton2,
   presupuesto,
 }) {
+  function showImage() {
+    if (uri) {
+      return { uri };
+    } else {
+      return image;
+    }
+  }
+
   const ButtonsTrue = ({ button }) => {
     if (button == true) {
       return (
@@ -47,11 +55,7 @@ export default function Cards({
         <Text>{content}</Text>
         <Card.Cover style={styles.image} source={{ uri: uri }} />
       </Card.Content>
-      {uri == "" ? (
-        <Card.Cover style={styles.image} source={{ uri: uri }} />
-      ) : (
-        <Card.Cover style={styles.image} source={image} />
-      )}
+      <Card.Cover style={styles.image} source={showImage()} />
       <ButtonsTrue button={on} />
     </Card>
   );
