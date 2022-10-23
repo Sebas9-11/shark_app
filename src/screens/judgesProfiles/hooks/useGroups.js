@@ -9,15 +9,17 @@ export const useGroups = () => {
   useEffect(() => {
     const unsubscribe = firebase.getGroups(
       (querySnapshot) => {
-        const groups = querySnapshot.docs.map(docSnapshot => docSnapshot.data());
+        const groups = querySnapshot.docs.map((docSnapshot) =>
+          docSnapshot.data()
+        );
         setGroups(groups);
       },
-      (error) => setError('Failed to fetch: ' + error.message)
+      (error) => setError("Failed to fetch: " + error.message)
     );
 
     setLoading(false);
     return unsubscribe;
-  }, [groups,setGroups]);
+  }, [groups, setGroups]);
 
   return [groups, setGroups, loading, error];
 };
