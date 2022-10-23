@@ -13,6 +13,7 @@ import {
   addDoc,
   updateDoc,
   getDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
@@ -25,8 +26,6 @@ class Firebase {
   static storage;
   static app;
   static userType;
-  static userData;
-  static groups;
 
   static init() {
     if (!Firebase.app) {
@@ -46,15 +45,7 @@ class Firebase {
       );
 
       Firebase.user = credential.user.uid;
-
       Firebase.userType = await Firebase.getById("users", Firebase.user);
-      if (Firebase.userType[0].rol == "user") {
-        Firebase.userData = await Firebase.getById("groups", Firebase.user);
-      } else {
-        Firebase.groups = await Firebase.getGroups();
-        Firebase.userData = await Firebase.getById("judges", Firebase.user);
-      }
-
       return Firebase.user;
     }
 
@@ -105,6 +96,7 @@ class Firebase {
       collection(Firebase.db, collectionName),
       where("id", "==", id)
     );
+    
     const querySnapshot = await getDocs(q).catch((error) => {
       console.log(error.message);
     });
@@ -115,19 +107,19 @@ class Firebase {
     return response;
   }
 
-  static async getGroups() {
-    const response = [];
+  static getSnapShotById(collectionName, id, snapshot, error) {
+    const documentQuery = query(
+      collection(Firebase.db, collectionName),
+      where("id", "==", id)
+    );
+     
+    return onSnapshot(documentQuery, snapshot, error)
+  }
 
-    let q = query(collection(Firebase.db, "groups"));
+  static getGroups(snapshot, error) {
+    let groupQuery = query(collection(Firebase.db, "groups"));
 
-    const querySnapshot = await getDocs(q).catch((error) => {
-      console.log(error.message);
-    });
-
-    querySnapshot.forEach((doc) => {
-      response.push(doc.data());
-    });
-    return response;
+    return onSnapshot(groupQuery, snapshot, error)
   }
 
   //upload image to firebase storage

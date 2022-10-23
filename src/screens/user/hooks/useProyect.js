@@ -1,25 +1,23 @@
 import { useState, useEffect } from "react";
 import { firebase } from "../../../services/firebase";
-import img from "../../../../assets/group.png";
 
 export const useProyect = () => {
   const [proyect, setProyect] = useState(null);
-  const [image, setImage] = useState(null);
-
-  function getProyect() {
-    try {
-      const [response] = firebase.userData;
-      const picture = response.image !== "" ? { uri: response.image } : img;
-      setImage(picture);
-      setProyect(response);
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getProyect();
-  }, []);
+    const unsubscribe = firebase.getSnapShotById('groups', firebase.user,
+      (querySnapshot) => {
+        const [ proyect ] = querySnapshot.docs.map(docSnapshot => docSnapshot.data());
+        setProyect(proyect);
+      },
+      (error) => setError('Failed to fetch: ' + error.message)
+    );
+    
+    setLoading(false);
+    return unsubscribe;
+  }, [proyect, setProyect]);
 
-  return [proyect, image];
+  return [proyect, loading, error];
 };

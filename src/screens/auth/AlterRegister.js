@@ -20,7 +20,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function AlterRegister() {
   const navigation = useNavigation();
   const [image, setImage] = useState(img);
-  const [participants, setParticipants] = useState({});
+  const participants = useRef([]);
   const toUpload = useRef(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,14 +28,13 @@ export default function AlterRegister() {
   const [newGroup, setNewGroup] = useState({
     image: "",
     judges: [],
-    collection: 0,
     group: "",
     desc: "",
     budget: 0,
   });
 
   const Validation = async () => {
-    let group = { ...newGroup, participants };
+    let group = { ...newGroup, participants: participants.current };
     if (group.group === "" || group.desc === "" || group.budget === "") {
       Alert.alert("Digita los campos vacios");
     } else {
@@ -62,6 +61,20 @@ export default function AlterRegister() {
       setImage({ uri: result.uri });
       toUpload.current = result.uri;
     }
+  };
+
+  const handleParticipants = (number,value) => {
+    let array = participants.current;
+    // find the index of the element in the array of objects
+    const index = array.findIndex(({id}) => id === number);
+    // if the index is not found, add the object to the array
+    if (index === -1) {
+      participants.current.push({ id: number, name: value });
+    } else {
+      // if the index is found, replace the object from the array and update the value
+      participants.current[index] = { id: number, name: value };
+    }
+
   };
 
   return (
@@ -114,30 +127,30 @@ export default function AlterRegister() {
         </Divider>
         <Inputs
           placeholder={"Name & Last Name"}
-          value={participants.participant1}
+          // value={participants.participant1}
           onChangeText={(participant1) =>
-            setParticipants({ ...participants, participant1 })
+            handleParticipants(1, participant1)
           }
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          value={participants.participant2}
+          // value={participants.participant2}
           onChangeText={(participant2) =>
-            setParticipants({ ...participants, participant2 })
+            handleParticipants(2, participant2)
           }
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          value={participants.participant3}
+          // value={participants.participant3}
           onChangeText={(participant3) =>
-            setParticipants({ ...participants, participant3 })
+            handleParticipants(3, participant3)
           }
         />
         <Inputs
           placeholder={"Name & Last Name"}
-          value={participants.participant4}
+          // value={participants.participant4}
           onChangeText={(participant4) =>
-            setParticipants({ ...participants, participant4 })
+            handleParticipants( 4, participant4)
           }
         />
         <Buttons

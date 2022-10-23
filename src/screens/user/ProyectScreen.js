@@ -1,4 +1,4 @@
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet,Text } from "react-native";
 import {
   ProyectHeader,
   ProyectDescription,
@@ -8,14 +8,20 @@ import { useProyect } from "./hooks/useProyect";
 import React from "react";
 
 export default function ProyectScreen() {
-  const [proyect, image] = useProyect();
+  const [proyect, loading, error] = useProyect();
+
+  if (loading) {
+    return <Text> Cargando...</Text>;
+  } else if (error) {
+    return <Text> {error} </Text>;
+  }
 
   return (
     <View>
       <ScrollView style={styles.scroll}>
         {proyect && (
           <View style={styles.container}>
-            <ProyectHeader title={proyect.group} img={image} />
+            <ProyectHeader title={proyect.group} img={proyect.image} />
             <ProyectDescription description={proyect.desc} />
             <ProyectParticipants participants={proyect.participants} />
           </View>

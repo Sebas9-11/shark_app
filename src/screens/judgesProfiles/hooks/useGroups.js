@@ -3,19 +3,21 @@ import { firebase } from "../../../services/firebase";
 
 export const useGroups = () => {
   const [groups, setGroups] = useState([]);
-
-  function getProyect() {
-    try {
-      const response = firebase.groups;
-      setGroups(response);
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getProyect();
-  }, []);
+    const unsubscribe = firebase.getGroups(
+      (querySnapshot) => {
+        const groups = querySnapshot.docs.map(docSnapshot => docSnapshot.data());
+        setGroups(groups);
+      },
+      (error) => setError('Failed to fetch: ' + error.message)
+    );
 
-  return [groups, setGroups];
+    setLoading(false);
+    return unsubscribe;
+  }, [groups,setGroups]);
+
+  return [groups, setGroups, loading, error];
 };

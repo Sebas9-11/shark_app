@@ -1,4 +1,4 @@
-import { ScrollView, Alert, StyleSheet } from "react-native";
+import { ScrollView, Alert, StyleSheet, Text } from "react-native";
 import React, { useRef } from "react";
 import Cards from "../../../components/Cards";
 import ModalView from "../../../components/ModalView";
@@ -7,7 +7,7 @@ import { SnackAlert } from "../../../components/SnackAlert";
 
 export default function GroupsView() {
   const [ modalVisible, setModalVisible] = React.useState(false);
-  const [ groups, setGroups ] = useGroups();
+  const [ groups, setGroups, loading, error ] = useGroups();
 
   const actualGroup = useRef(null);
 
@@ -25,24 +25,36 @@ export default function GroupsView() {
     setGroups(newCards);
   };
 
+  
+  if (loading) {
+    return <Text> Cargando...</Text>
+  } else if (error) {
+    return <Text> {error} </Text>
+  } 
+  
+
   return (
     <ScrollView style={styles.container}>
-      {groups.map((card, index) => (
-        <Cards
-          key={index}
-          title={card.group}
-          presupuesto={card.budget}
-          content={card.desc}
-          uri={card.image}
-          on
-          onPressButton1={() => showModal(card)}
-          onpressButton2={() => deleteCard(index)}
-        />
-      ))}
-      {modalVisible && <ModalView
+      {
+        groups.map((card, index) => (
+          <Cards
+            key={index}
+            title={card.group}
+            presupuesto={card.budget}
+            content={card.desc}
+            uri={card.image}
+            on
+            onPressButton1={() => showModal(card)}
+            onpressButton2={() => deleteCard(index)}
+          />
+        ))
+      }
+      {
+        modalVisible && <ModalView
         hidenModal={hidenModal}
         group={actualGroup.current}
-      />}
+        />
+      }
     </ScrollView>
   );
 }

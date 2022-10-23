@@ -3,20 +3,24 @@ import { firebase } from "../../../services/firebase";
 
 export const useJudges = () => {
   const [judgesState, setJudgesState] = useState();
-
-  async function getJudges() {
-    try {
-      const [response] = firebase.userData;
-      const { judges } = response;
-      setJudgesState(judges);
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getJudges();
-  }, []);
+    const unsubscribe = firebase.getSnapShotById('groups', firebase.user,
+      (querySnapshot) => {
+        const [ proyect ] = querySnapshot.docs.map(docSnapshot => docSnapshot.data());
+        const total = proyect.judges.reduce((acc, judge) => acc + judge.money, 0);
+        setTotal(total);
+        setJudgesState(proyect.judges);
+      },
+      (error) => setError('Failed to fetch: ' + error.message)
+    );
+    
+    setLoading(false);
+    return unsubscribe;
+  }, [judgesState, setJudgesState]);
 
-  return [judgesState];
+  return [judgesState, total, loading, error];
 };

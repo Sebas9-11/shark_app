@@ -5,7 +5,14 @@ import { useJudges } from "./hooks/useJudges";
 import Cards from "../../components/Cards";
 
 export default function JudgesScreen() {
-  const [judges] = useJudges();
+  const [judges, total, loading, error] = useJudges();
+
+  if (loading) {
+    return <Text> Cargando...</Text>
+  } else if (error) {
+    return <Text> {error} </Text>
+  }
+
   const itemBuilder = ({ item }) => {
     return (
       <Cards
@@ -16,10 +23,11 @@ export default function JudgesScreen() {
     );
     // return <JudgeItem aporte={item.money} nombre={item.name} />;
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.containerView}>
-        <Text>Total Aportes: {}</Text>
+        <Text>Total investment: { total }</Text>
         <FlatList data={judges} renderItem={itemBuilder} />
       </View>
     </View>
