@@ -15,7 +15,7 @@ export default function Cards({
   const ButtonsTrue = ({ button }) => {
     if (button == true) {
       return (
-        <Card.Actions>
+        <Card.Actions style={styles.containerButton}>
           <Button
             style={styles.button}
             color={Colors.primary}
@@ -40,12 +40,13 @@ export default function Cards({
   };
   return (
     <Card style={styles.card}>
-      <Card.Title title={title} />
-      <Card.Content>
+      <Card.Title title={title} style={{ backgroundColor: Colors.primary }} />
+      <Card.Content style={styles.content}>
         <Text>Presupuesto: ${presupuesto}</Text>
         <Text>{content}</Text>
+        <Card.Cover style={styles.image} source={{ uri: uri }} />
       </Card.Content>
-      <Card.Cover style={styles.image} source={{ uri: uri }} />
+
       <ButtonsTrue button={on} />
     </Card>
   );
@@ -56,10 +57,16 @@ const styles = StyleSheet.create({
     width: "100%",
     marginVertical: 10,
   },
+  content: {
+    width: "100%",
+    padding: 10,
+    alignItems: "center",
+  },
   image: {
-    width: "50%",
+    width: "80%",
     height: 200,
-    marginBottom: 36,
+    borderRadius: 10,
+    marginHorizontal: 10,
     borderWidth: 4,
     borderColor: "#fff",
     backgroundColor: "#fff",
@@ -68,7 +75,11 @@ const styles = StyleSheet.create({
   button: {
     marginHorizontal: 10,
     width: "40%",
-    marginVertical: 10,
     color: "#fff",
+  },
+  containerButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 10,
   },
 });

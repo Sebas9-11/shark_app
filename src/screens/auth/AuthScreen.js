@@ -26,8 +26,8 @@ export default function AuthScreen() {
   };
 
   return (
-    <View style={GlobalStyles.container}>
-      <Image source={logo} style={[styles.logo, StyleSheet.absoluteFill]} />
+    <View style={styles.container}>
+      <Image source={logo} style={[styles.logo]} />
       <BlurView
         intensity={Platform.OS === "ios" ? 10 : 150}
         style={styles.blur}
@@ -60,11 +60,15 @@ export default function AuthScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   blur: {
     width: "90%",
     height: "50%",
     alignItems: "center",
-    justifyContent: "center",
     borderRadius: 10,
     paddingHorizontal: 20,
   },
@@ -74,8 +78,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   logo: {
-    width: "100%",
-    height: "100%",
+    width: 200,
+    height: 200,
     resizeMode: "contain",
+    marginBottom: 20,
   },
 });
