@@ -139,7 +139,7 @@ class Firebase {
   // send money to the group
   static async sendMoney(id, money) {
     
-    money = parseFloat(money)
+    const parseMoney = parseFloat(money)
 
     // get the group
     const groupQuery = query(
@@ -158,9 +158,9 @@ class Firebase {
     const [ judge ] = judgeResponse.docs
     const judgeData = judge.data()
 
-    const judgeMoney = parseFloat(judgeData.money)
+    const judgeMoney = judgeData.money
     // check if the judge has enough money
-    if (judgeMoney < money) {
+    if (judgeMoney < parseMoney) {
       throw new Error("No tienes suficiente dinero")
     }
     
@@ -175,9 +175,8 @@ class Firebase {
       }
     })
 
-
     // update the judge money
-    const judgeMoneyUpdate = judgeMoney - money
+    const judgeMoneyUpdate = judgeMoney - parseMoney
     const updateJudge = {
       money: judgeMoneyUpdate
     }
@@ -185,16 +184,11 @@ class Firebase {
     await updateDoc(judge.ref, updateJudge)
 
     // update the group collection
-    const groupMoney = parseFloat(groupData.collection)
-    const groupMoneyUpdate = groupMoney + money
     const updateGroup = {
-      collection: groupMoneyUpdate,
       judges: [...groupData.judges, { name: judgeData.name, money }]
     }
 
     await updateDoc(group.ref, updateGroup)
-
-    Firebase.userDate = { ...judgeData, ...updateJudge }
   }
 }
 

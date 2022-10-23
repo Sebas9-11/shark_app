@@ -38,7 +38,7 @@ export default function GroupsView() {
       {
         groups.map((card, index) => (
           <Cards
-            key={index}
+            key={`card-${index+1}`}
             title={card.group}
             presupuesto={card.budget}
             content={card.desc}
