@@ -53,9 +53,8 @@ export default function Cards({
       <Card.Content style={styles.content}>
         <Text>Presupuesto: ${presupuesto}</Text>
         <Text>{content}</Text>
-        <Card.Cover style={styles.image} source={{ uri: uri }} />
+        <Card.Cover style={styles.image} source={showImage()} />
       </Card.Content>
-      <Card.Cover style={styles.image} source={showImage()} />
       <ButtonsTrue button={on} />
     </Card>
   );
