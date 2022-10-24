@@ -9,8 +9,17 @@ export const useJudge = () => {
   useEffect(() => {
     const unsubscribe = firebase.getSnapShotById('judges', firebase.user,
       (querySnapshot) => {
-        const [ judge ] = querySnapshot.docs.map(docSnapshot => docSnapshot.data());
-        setJusgeState(judge);
+        querySnapshot.docChanges().forEach((change) => {
+          if (!jusgeState.id) {
+            if (change.type === "added") {
+              setJusgeState(change.doc.data());
+            }
+          }
+          
+          if (change.type === "modified") {
+            setJusgeState(change.doc.data());
+          }
+        });
       },
       (error) => setError('Failed to fetch: ' + error.message)
     );

@@ -9,7 +9,6 @@ export const useGroups = () => {
   useEffect(() => {
     const unsubscribe = firebase.getGroups(
       (querySnapshot) => {
-        console.log("adding groups");
         querySnapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
             if (!groups.find((group) => group.id === change.doc.data().id)) {
