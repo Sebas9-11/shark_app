@@ -10,13 +10,13 @@ export const useProyect = () => {
     const unsubscribe = firebase.getSnapShotById('groups', firebase.user,
       (querySnapshot) => {
         querySnapshot.docChanges().forEach((change) => {
-          if (!proyect.id) {
-            if (change.type === "added") {
-              setProyect(change.doc.data());
-            }
+          if (change.type === "added") {
+            console.log('added');
+            setProyect(change.doc.data());
           }
           
           if (change.type === "modified") {
+            console.log('modified');
             setProyect(change.doc.data());
           }
         });
@@ -26,7 +26,7 @@ export const useProyect = () => {
     
     setLoading(false);
     return unsubscribe;
-  }, [proyect, setProyect]);
+  }, []);
 
   return [proyect, loading, error];
 };

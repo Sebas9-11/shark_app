@@ -10,10 +10,8 @@ export const useJudge = () => {
     const unsubscribe = firebase.getSnapShotById('judges', firebase.user,
       (querySnapshot) => {
         querySnapshot.docChanges().forEach((change) => {
-          if (!jusgeState.id) {
-            if (change.type === "added") {
-              setJusgeState(change.doc.data());
-            }
+          if (change.type === "added") {
+            setJusgeState(change.doc.data());
           }
           
           if (change.type === "modified") {
@@ -26,7 +24,7 @@ export const useJudge = () => {
     
     setLoading(false);
     return unsubscribe;
-  }, [jusgeState, setJusgeState]);
+  }, []);
 
   return [jusgeState, loading, error];
 };

@@ -11,9 +11,7 @@ export const useGroups = () => {
       (querySnapshot) => {
         querySnapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
-            if (!groups.find((group) => group.id === change.doc.data().id)) {
-              setGroups((prev) => [...prev, change.doc.data()]);
-            }
+            setGroups((prev) => [...prev, change.doc.data()]);
           }
         });
       },
@@ -22,7 +20,7 @@ export const useGroups = () => {
 
     setLoading(false);
     return unsubscribe;
-  }, [groups,setGroups]);
+  }, []);
 
   return [groups, setGroups, loading, error];
 };
