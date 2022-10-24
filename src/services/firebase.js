@@ -96,10 +96,8 @@ class Firebase {
       collection(Firebase.db, collectionName),
       where("id", "==", id)
     );
-
-    const querySnapshot = await getDocs(q).catch((error) => {
-      console.log(error.message);
-    });
+    
+    const querySnapshot = await getDocs(q)
 
     querySnapshot.forEach((doc) => {
       response.push(doc.data());

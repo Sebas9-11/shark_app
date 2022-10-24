@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { firebase } from "../../../services/firebase";
 
 export const useGroups = () => {
@@ -9,10 +9,14 @@ export const useGroups = () => {
   useEffect(() => {
     const unsubscribe = firebase.getGroups(
       (querySnapshot) => {
-        const groups = querySnapshot.docs.map((docSnapshot) =>
-          docSnapshot.data()
-        );
-        setGroups(groups);
+        console.log("adding groups");
+        querySnapshot.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            if (!groups.find((group) => group.id === change.doc.data().id)) {
+              setGroups((prev) => [...prev, change.doc.data()]);
+            }
+          }
+        });
       },
       (error) => setError("Failed to fetch: " + error.message)
     );
