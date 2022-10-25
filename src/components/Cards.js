@@ -1,7 +1,7 @@
 import { Text, StyleSheet } from "react-native";
 import React from "react";
 import { Card, Button } from "react-native-paper";
-import { Colors } from "../constants";
+import { Colors, NewColors } from "../constants";
 import image from "../../assets/group.png";
 
 export default function Cards({
@@ -13,7 +13,6 @@ export default function Cards({
   onpressButton2,
   presupuesto,
 }) {
-
   function showImage() {
     if (uri) {
       return { uri };
@@ -22,14 +21,13 @@ export default function Cards({
     }
   }
 
-
   const ButtonsTrue = ({ button }) => {
     if (button == true) {
       return (
-        <Card.Actions>
+        <Card.Actions style={styles.containerButton}>
           <Button
             style={styles.button}
-            color={Colors.primary}
+            color={NewColors.blue}
             mode="contained"
             onPress={onPressButton1}
           >
@@ -37,7 +35,7 @@ export default function Cards({
           </Button>
           <Button
             style={styles.button}
-            color={Colors.primary}
+            color={NewColors.red}
             mode="contained"
             onPress={onpressButton2}
           >
@@ -51,12 +49,17 @@ export default function Cards({
   };
   return (
     <Card style={styles.card}>
-      <Card.Title title={title} />
-      <Card.Content>
+      {/* color del titulo blanco */}
+      <Card.Title
+        titleStyle={{ color: Colors.white }}
+        title={title}
+        style={{ backgroundColor: NewColors.red }}
+      />
+      <Card.Content style={styles.content}>
         <Text>Presupuesto: ${presupuesto}</Text>
         <Text>{content}</Text>
+        <Card.Cover style={styles.image} source={showImage()} />
       </Card.Content>
-      <Card.Cover style={styles.image} source={showImage()} />
       <ButtonsTrue button={on} />
     </Card>
   );
@@ -67,10 +70,20 @@ const styles = StyleSheet.create({
     width: "100%",
     marginVertical: 10,
   },
+  title: {
+    color: Colors.white,
+  },
+
+  content: {
+    width: "100%",
+    padding: 10,
+    alignItems: "center",
+  },
   image: {
-    width: "50%",
+    width: "80%",
     height: 200,
-    marginBottom: 36,
+    borderRadius: 10,
+    marginHorizontal: 10,
     borderWidth: 4,
     borderColor: "#fff",
     backgroundColor: "#fff",
@@ -79,7 +92,11 @@ const styles = StyleSheet.create({
   button: {
     marginHorizontal: 10,
     width: "40%",
-    marginVertical: 10,
     color: "#fff",
+  },
+  containerButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 10,
   },
 });

@@ -110,14 +110,14 @@ class Firebase {
       collection(Firebase.db, collectionName),
       where("id", "==", id)
     );
-     
-    return onSnapshot(documentQuery, snapshot, error)
+
+    return onSnapshot(documentQuery, snapshot, error);
   }
 
   static getGroups(snapshot, error) {
     let groupQuery = query(collection(Firebase.db, "groups"));
 
-    return onSnapshot(groupQuery, snapshot, error)
+    return onSnapshot(groupQuery, snapshot, error);
   }
 
   //upload image to firebase storage
@@ -136,8 +136,7 @@ class Firebase {
 
   // send money to the group
   static async sendMoney(id, money) {
-    
-    const parseMoney = parseFloat(money)
+    money = parseFloat(money);
 
     // get the group
     const groupQuery = query(
@@ -150,43 +149,48 @@ class Firebase {
       collection(Firebase.db, "judges"),
       where("id", "==", Firebase.user)
     );
-  
-    // get the judge data
-    const judgeResponse  = await getDocs(judgeQuery)
-    const [ judge ] = judgeResponse.docs
-    const judgeData = judge.data()
 
-    const judgeMoney = judgeData.money
+    // get the judge data
+    const judgeResponse = await getDocs(judgeQuery);
+    const [judge] = judgeResponse.docs;
+    const judgeData = judge.data();
+
+    const judgeMoney = parseFloat(judgeData.money);
     // check if the judge has enough money
-    if (judgeMoney < parseMoney) {
-      throw new Error("No tienes suficiente dinero")
+    if (judgeMoney < money) {
+      throw new Error("No tienes suficiente dinero");
     }
-    
+
     // get the group data
-    const groupResponse  =  await getDocs(groupQuery)
-    const [ group ] = groupResponse.docs
-    const groupData = group.data()
+    const groupResponse = await getDocs(groupQuery);
+    const [group] = groupResponse.docs;
+    const groupData = group.data();
     // check if the judge has invested in the group
     groupData.judges.forEach((investor) => {
       if (investor.name == judgeData.name) {
-        throw new Error("Ya has invertido en este grupo")
+        throw new Error("Ya has invertido en este grupo");
       }
-    })
+    });
 
     // update the judge money
-    const judgeMoneyUpdate = judgeMoney - parseMoney
+    const judgeMoneyUpdate = judgeMoney - money;
     const updateJudge = {
-      money: judgeMoneyUpdate
-    }
+      money: judgeMoneyUpdate,
+    };
 
-    await updateDoc(judge.ref, updateJudge)
+    await updateDoc(judge.ref, updateJudge);
 
     // update the group collection
+    const groupMoney = parseFloat(groupData.collection);
+    const groupMoneyUpdate = groupMoney + money;
     const updateGroup = {
-      judges: [...groupData.judges, { name: judgeData.name, money }]
-    }
+      collection: groupMoneyUpdate,
+      judges: [...groupData.judges, { name: judgeData.name, money }],
+    };
 
-    await updateDoc(group.ref, updateGroup)
+    await updateDoc(group.ref, updateGroup);
+
+    Firebase.userDate = { ...judgeData, ...updateJudge };
   }
 }
 

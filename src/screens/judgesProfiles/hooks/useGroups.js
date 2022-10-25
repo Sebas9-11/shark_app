@@ -15,7 +15,7 @@ export const useGroups = () => {
           }
         });
       },
-      (error) => setError('Failed to fetch: ' + error.message)
+      (error) => setError("Failed to fetch: " + error.message)
     );
 
     setLoading(false);

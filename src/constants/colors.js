@@ -14,3 +14,8 @@ export const Colors = {
   dark: "#0c0c0c",
   danger: "#ff5252",
 };
+
+export const NewColors = {
+  blue: "#0f00b8",
+  red: "#ff0000",
+};

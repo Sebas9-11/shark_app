@@ -1,8 +1,14 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { Buttons, Inputs } from "../../components";
-import { GlobalStyles } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../constants/colors";
+import { Colors, NewColors } from "../../constants/colors";
 import { BlurView } from "expo-blur";
 import React from "react";
 import { firebase } from "../../services/firebase";
@@ -26,45 +32,55 @@ export default function AuthScreen() {
   };
 
   return (
-    <View style={GlobalStyles.container}>
-      <Image source={logo} style={[styles.logo, StyleSheet.absoluteFill]} />
-      <BlurView
-        intensity={Platform.OS === "ios" ? 10 : 150}
-        style={styles.blur}
-      >
-        <Text style={styles.title}>Login</Text>
-        <Inputs
-          placeholder="Email"
-          type="email-address"
-          securety={false}
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-        />
-        <Inputs
-          placeholder="Password"
-          type="default"
-          securety={true}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-        />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <Image source={logo} style={[styles.logo]} />
+        <BlurView
+          intensity={Platform.OS === "ios" ? 10 : 150}
+          style={styles.blur}
+        >
+          <Text style={styles.title}>Login</Text>
+          <Inputs
+            placeholder="Email"
+            type="email-address"
+            securety={false}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
+          <Inputs
+            placeholder="Password"
+            type="default"
+            securety={true}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
 
-        <Buttons title="Login" onPress={handleSingIn} color={Colors.Yellow} />
-        <Buttons
-          title="Register"
-          onPress={() => navigation.navigate("Register")}
-          color={Colors.danger}
-        />
-      </BlurView>
-    </View>
+          <Buttons
+            title="Login"
+            onPress={handleSingIn}
+            color={NewColors.blue}
+          />
+          <Buttons
+            title="Register"
+            onPress={() => navigation.navigate("Register")}
+            color={NewColors.red}
+          />
+        </BlurView>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   blur: {
     width: "90%",
     height: "50%",
     alignItems: "center",
-    justifyContent: "center",
     borderRadius: 10,
     paddingHorizontal: 20,
   },
@@ -74,8 +90,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   logo: {
-    width: "100%",
-    height: "100%",
+    width: 200,
+    height: 200,
     resizeMode: "contain",
+    marginBottom: 20,
   },
 });
