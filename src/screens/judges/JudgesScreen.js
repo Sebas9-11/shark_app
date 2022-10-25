@@ -8,9 +8,9 @@ export default function JudgesScreen() {
   const [judges, total, loading, error] = useJudges();
 
   if (loading) {
-    return <Text> Cargando...</Text>
+    return <Text> Cargando...</Text>;
   } else if (error) {
-    return <Text> {error} </Text>
+    return <Text> {error} </Text>;
   }
 
   const itemBuilder = ({ item }) => {
@@ -27,7 +27,9 @@ export default function JudgesScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.containerView}>
-        <Text>Total investment: { total }</Text>
+        <Text style={styles.budget}>
+          <Text style={styles.title}>Total obtenido: </Text>${total}
+        </Text>
         <FlatList data={judges} renderItem={itemBuilder} />
       </View>
     </View>
@@ -41,5 +43,14 @@ const styles = StyleSheet.create({
   containerView: {
     flex: 1,
     paddingHorizontal: 10,
+  },
+  budget: {
+    fontSize: 20,
+    textAlign: "center",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
   },
 });
