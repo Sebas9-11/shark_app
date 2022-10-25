@@ -7,15 +7,19 @@ import { Searchbar } from "react-native-paper";
 
 export default function GroupsView() {
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [groups, setGroups, loading, error] = useGroups();
+  const [groups, setGroups, loading, error, filterGroups] = useGroups();
 
   function searchByName(text) {
-    const newData = groups.filter(function (item) {
-      const itemData = item.group.toUpperCase();
-      const textData = text.toUpperCase();
-      return itemData.indexOf(textData) > -1;
-    });
-    setGroups(newData);
+    if (text === "") {
+      setGroups(filterGroups.current);
+    } else {
+      const newData = groups.filter(function (item) {
+        const itemData = item.group.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setGroups(newData);
+    }
   }
 
   const actualGroup = useRef(null);

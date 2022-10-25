@@ -176,6 +176,7 @@ class Firebase {
     const judgeMoneyUpdate = judgeMoney - money;
     const updateJudge = {
       money: judgeMoneyUpdate,
+      investments: [...judgeData.investments, { name: groupData.group, money, id }],
     };
 
     await updateDoc(judge.ref, updateJudge);

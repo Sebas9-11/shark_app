@@ -12,27 +12,6 @@ export default function ProfileJudgesScreen() {
     return <Text>{error}</Text>;
   }
 
-  const groups = [
-    {
-      id: 1,
-      name: "Grupo 1",
-      desc: "ipsum lorem ",
-      money: 1000,
-    },
-    {
-      id: 2,
-      name: "Grupo 2",
-      desc: "ipsum lorem ",
-      money: 1000,
-    },
-    {
-      id: 3,
-      name: "Grupo 3",
-      desc: "ipsum lorem ",
-      money: 1000,
-    },
-  ];
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -48,12 +27,11 @@ export default function ProfileJudgesScreen() {
       <View style={styles.listContainer}>
         <FlatList
           style={styles.list}
-          data={groups}
+          data={judgeState.investments}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <View style={styles.group}>
               <Text style={styles.groupName}>{item.name}</Text>
-              <Text style={styles.groupDesc}>{item.desc}</Text>
               <Text style={styles.groupMoney}>
                 <Text style={styles.budget}>Invertido:</Text>${item.money}
               </Text>
