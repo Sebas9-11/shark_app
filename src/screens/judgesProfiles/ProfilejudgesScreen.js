@@ -2,9 +2,8 @@ import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import { useJudge } from "./hooks/useJudge";
 import shark from "../../../assets/logoShark.jpg";
 import Divider from "react-native-divider";
-import { Ionicons } from "@expo/vector-icons";
 
-export default function JudgesScreen() {
+export default function ProfileJudgesScreen() {
   const [judgeState, loading, error] = useJudge();
 
   if (loading) {
