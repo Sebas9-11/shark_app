@@ -3,6 +3,7 @@ import { useJudge } from "./hooks/useJudge";
 import shark from "../../../assets/logoShark.jpg";
 import Divider from "react-native-divider";
 import { Ionicons } from "@expo/vector-icons";
+import { useGroups } from "./hooks/useGroups";
 
 export default function JudgesScreen() {
   const [judgeState, loading, error] = useJudge();
@@ -12,27 +13,6 @@ export default function JudgesScreen() {
   } else if (error) {
     return <Text>{error}</Text>;
   }
-
-  const groups = [
-    {
-      id: 1,
-      name: "Grupo 1",
-      desc: "ipsum lorem ",
-      money: 1000,
-    },
-    {
-      id: 2,
-      name: "Grupo 2",
-      desc: "ipsum lorem ",
-      money: 1000,
-    },
-    {
-      id: 3,
-      name: "Grupo 3",
-      desc: "ipsum lorem ",
-      money: 1000,
-    },
-  ];
 
   return (
     <View style={styles.container}>
@@ -49,17 +29,17 @@ export default function JudgesScreen() {
       <View style={styles.listContainer}>
         <FlatList
           style={styles.list}
-          data={groups}
+          data={judgeState.investments}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
+          renderItem={({ item }) =>  (
             <View style={styles.group}>
               <Text style={styles.groupName}>{item.name}</Text>
-              <Text style={styles.groupDesc}>{item.desc}</Text>
               <Text style={styles.groupMoney}>
-                <Text style={styles.budget}>Invertido:</Text>${item.money}
+                <Text style={styles.budget}>Invertido:</Text>${item.money} 
               </Text>
             </View>
-          )}
+          )
+        }
         />
       </View>
     </View>
