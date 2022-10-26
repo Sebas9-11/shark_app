@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Buttons, Inputs } from "../../components";
 import { useNavigation } from "@react-navigation/native";
-import { Colors, NewColors } from "../../constants/colors";
+import { NewColors } from "../../constants/colors";
 import { BlurView } from "expo-blur";
 import React from "react";
 import { firebase } from "../../services/firebase";

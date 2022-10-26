@@ -39,7 +39,13 @@ export default function AlterRegister() {
 
   const Validation = async () => {
     let group = { ...newGroup, participants: participants.current };
-    if (group.group === "" || group.desc === "" || group.budget === "") {
+    if (
+      email === "" ||
+      password === "" ||
+      group.group === "" ||
+      group.desc === "" ||
+      group.budget === ""
+    ) {
       Alert.alert("Digita los campos vacios");
     } else {
       try {
