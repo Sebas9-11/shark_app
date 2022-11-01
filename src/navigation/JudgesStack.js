@@ -6,7 +6,7 @@ import { Colors, NewColors } from "../constants";
 import { Ionicons } from "@expo/vector-icons";
 
 //screens
-import JudgesScreen from "../screens/judgesProfiles/judgesScreen";
+import ProfileJudgesScreen from "../screens/judgesProfiles/ProfilejudgesScreen";
 import GroupsView from "../screens/judgesProfiles/groupsView/GroupsView";
 
 const Drawer = createDrawerNavigator();
@@ -50,7 +50,7 @@ export default function JudgesStack() {
           },
         }}
       >
-        <Drawer.Screen name="Me" component={JudgesScreen} />
+        <Drawer.Screen name="Me" component={ProfileJudgesScreen} />
         <Drawer.Screen name="Groups" component={GroupsView} />
       </Drawer.Group>
     </Drawer.Navigator>

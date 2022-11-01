@@ -1,12 +1,46 @@
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  Alert,
+  BackHandler,
+} from "react-native";
 import { useJudge } from "./hooks/useJudge";
 import shark from "../../../assets/logoShark.jpg";
 import Divider from "react-native-divider";
-import { Ionicons } from "@expo/vector-icons";
-import { useGroups } from "./hooks/useGroups";
+import React from "react";
+import { firebase } from "../../services/firebase";
+import { useNavigation } from "@react-navigation/native";
 
-export default function JudgesScreen() {
+export default function ProfileJudgesScreen() {
   const [judgeState, loading, error] = useJudge();
+  const navigation = useNavigation();
+
+  function back() {
+    BackHandler.exitApp();
+    firebase.signOut(navigation.navigate("Login"));
+  }
+
+  React.useEffect(() => {
+    const backAction = () => {
+      Alert.alert("Cuidado", "¿Deseas salir y cerrar sesion?", [
+        {
+          text: "NO",
+          onPress: () => null,
+          style: "cancel",
+        },
+        { text: "SI", onPress: () => back() },
+      ]);
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+    return () => backHandler.remove();
+  }, []);
 
   if (loading) {
     return <Text>Loading...</Text>;
@@ -31,15 +65,14 @@ export default function JudgesScreen() {
           style={styles.list}
           data={judgeState.investments}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) =>  (
+          renderItem={({ item }) => (
             <View style={styles.group}>
               <Text style={styles.groupName}>{item.name}</Text>
               <Text style={styles.groupMoney}>
-                <Text style={styles.budget}>Invertido:</Text>${item.money} 
+                <Text style={styles.budget}>Invertido:</Text>${item.money}
               </Text>
             </View>
-          )
-        }
+          )}
         />
       </View>
     </View>

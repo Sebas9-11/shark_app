@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   getAuth,
+  sendEmailVerification,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -43,12 +44,10 @@ class Firebase {
         email,
         password
       );
-
       Firebase.user = credential.user.uid;
       Firebase.userType = await Firebase.getById("users", Firebase.user);
       return Firebase.user;
     }
-
     throw new Error("Verifique los campos");
   }
 
@@ -59,6 +58,14 @@ class Firebase {
         email,
         password
       );
+      // send verification email and confiramtion message
+      await sendEmailVerification(credential.user)
+        .then(() => {
+          console.log("Email sent");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
       Firebase.user = credential.user.uid;
       return Firebase.user;
@@ -96,8 +103,8 @@ class Firebase {
       collection(Firebase.db, collectionName),
       where("id", "==", id)
     );
-    
-    const querySnapshot = await getDocs(q)
+
+    const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
       response.push(doc.data());
@@ -176,7 +183,10 @@ class Firebase {
     const judgeMoneyUpdate = judgeMoney - money;
     const updateJudge = {
       money: judgeMoneyUpdate,
-      investments: [...judgeData.investments, { name: groupData.group, money, id }],
+      investments: [
+        ...judgeData.investments,
+        { name: groupData.group, money, id },
+      ],
     };
 
     await updateDoc(judge.ref, updateJudge);
