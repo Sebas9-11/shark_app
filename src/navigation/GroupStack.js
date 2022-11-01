@@ -4,7 +4,7 @@ import ProyectScreen from "../screens/user/ProyectScreen";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { firebase } from "../services/firebase";
-import { Colors } from "../constants";
+import { Colors, NewColors } from "../constants";
 import { Ionicons } from "@expo/vector-icons";
 
 const Drawer = createDrawerNavigator();
@@ -44,7 +44,7 @@ export default function GroupStack() {
         screenOptions={{
           headerTitleAlign: "center",
           headerStyle: {
-            backgroundColor: Colors.danger,
+            backgroundColor: NewColors.red,
           },
         }}
       >

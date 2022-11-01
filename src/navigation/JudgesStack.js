@@ -2,7 +2,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { firebase } from "../services/firebase";
-import { Colors } from "../constants";
+import { Colors, NewColors } from "../constants";
 import { Ionicons } from "@expo/vector-icons";
 
 //screens
@@ -46,7 +46,7 @@ export default function JudgesStack() {
         screenOptions={{
           headerTitleAlign: "center",
           headerStyle: {
-            backgroundColor: Colors.danger,
+            backgroundColor: NewColors.red,
           },
         }}
       >

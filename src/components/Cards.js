@@ -1,7 +1,7 @@
 import { Text, StyleSheet } from "react-native";
 import React from "react";
 import { Card, Button } from "react-native-paper";
-import { Colors } from "../constants";
+import { Colors, NewColors } from "../constants";
 import image from "../../assets/group.png";
 
 export default function Cards({
@@ -27,7 +27,7 @@ export default function Cards({
         <Card.Actions style={styles.containerButton}>
           <Button
             style={styles.button}
-            color={Colors.primary}
+            color={NewColors.blue}
             mode="contained"
             onPress={onPressButton1}
           >
@@ -35,7 +35,7 @@ export default function Cards({
           </Button>
           <Button
             style={styles.button}
-            color={Colors.primary}
+            color={NewColors.red}
             mode="contained"
             onPress={onpressButton2}
           >
@@ -49,7 +49,12 @@ export default function Cards({
   };
   return (
     <Card style={styles.card}>
-      <Card.Title title={title} style={{ backgroundColor: Colors.primary }} />
+      {/* color del titulo blanco */}
+      <Card.Title
+        titleStyle={{ color: Colors.white }}
+        title={title}
+        style={{ backgroundColor: NewColors.red }}
+      />
       <Card.Content style={styles.content}>
         <Text>Presupuesto: ${presupuesto}</Text>
         <Text>{content}</Text>
@@ -65,6 +70,10 @@ const styles = StyleSheet.create({
     width: "100%",
     marginVertical: 10,
   },
+  title: {
+    color: Colors.white,
+  },
+
   content: {
     width: "100%",
     padding: 10,

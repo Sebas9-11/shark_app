@@ -13,12 +13,6 @@ export const Buttons = ({ title, onPress, color }) => {
     >
       {title}
     </Button>
-    // <TouchableOpacity
-    //   style={[styles.container, { backgroundColor: color }]}
-    //   onPress={onPress}
-    // >
-    //   <Text style={styles.text}>{title}</Text>
-    // </TouchableOpacity>
   );
 };
 
@@ -32,12 +26,6 @@ export const ButtonRegister = ({ title, onPress, color }) => {
     >
       {title}
     </Button>
-    // <TouchableOpacity
-    //   style={[styles.buttonRegister, { backgroundColor: color }]}
-    //   onPress={onPress}
-    // >
-    //   <Text style={styles.text}>{title}</Text>
-    // </TouchableOpacity>
   );
 };
 

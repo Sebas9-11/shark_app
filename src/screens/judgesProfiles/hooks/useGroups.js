@@ -3,6 +3,7 @@ import { firebase } from "../../../services/firebase";
 
 export const useGroups = () => {
   const [groups, setGroups] = useState([]);
+  const filterGroups = useRef([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -11,9 +12,11 @@ export const useGroups = () => {
       (querySnapshot) => {
         querySnapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
-            if (!groups.find((group) => group.id === change.doc.data().id)) {
-              setGroups((prev) => [...prev, change.doc.data()]);
-            }
+            setGroups((prev) => {
+              const newAdded = [...prev, change.doc.data()];
+              filterGroups.current = newAdded;
+              return newAdded;
+            });
           }
         });
       },
@@ -22,7 +25,7 @@ export const useGroups = () => {
 
     setLoading(false);
     return unsubscribe;
-  }, [groups, setGroups]);
+  }, []);
 
-  return [groups, setGroups, loading, error];
+  return [groups, setGroups, loading, error, filterGroups];
 };
